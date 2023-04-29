@@ -73,3 +73,6 @@ crashlytics-build.properties
 
 # Mac
 .DS_Store
+
+# Until I figure out licensing stuff
+/Assets/[Ff]onts/
