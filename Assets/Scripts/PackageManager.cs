@@ -6,20 +6,34 @@ using UnityEngine;
 public class PackageManager : MonoBehaviour
 {
     public Inventory playerInventory;
-    public List<AreaOfInterest> pickupLocations = new();
-    public List<AreaOfInterest> dropoffLocations = new();
+    public List<AreaOfInterest> sources = new();
+    public List<AreaOfInterest> destinations = new();
 
     public AOIChannel pickupChannel;
     public AOIChannel dropoffChannel;
 
     public Package packagePrefab;
 
-    public PackageType testPackageType;
+    public PackageType[] packageTypes;
     
     private void OnEnable()
     {
         pickupChannel.Entered += PickupEntered;
         dropoffChannel.Entered += DropoffEntered;
+    }
+
+    private void Start()
+    {
+        foreach (var source in sources)
+        {
+            source.SetPackageType(packageTypes[0]);
+        }
+        
+        for (int i = 0; i < packageTypes.Length; i++)
+        {
+
+            destinations[i].SetPackageType(packageTypes[i]);
+        }
     }
 
     private void OnDisable()
@@ -30,15 +44,24 @@ public class PackageManager : MonoBehaviour
 
     private void PickupEntered(AreaOfInterest area)
     {
+        // Only one package for now
+        if (playerInventory.HasPackage())
+            return;
+        
         Debug.Log($"Pickup entered: {area.name}");
         var package = Instantiate(packagePrefab);
-        package.SetPackageType(testPackageType);
+        package.SetPackageType(area.PackageType);
         playerInventory.TryPickup(package);
     }
 
     private void DropoffEntered(AreaOfInterest area)
     {
+        if (!playerInventory.HasPackage())
+            return;
+        
         Debug.Log($"Dropoff entered: {area.name}");
-        playerInventory.TryDropoff();   
+        var pack = playerInventory.GetPackage(0);
+        if (pack.PackageType == area.PackageType)
+            playerInventory.TryDropoff();
     }
 }

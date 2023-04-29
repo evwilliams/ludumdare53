@@ -1,9 +1,11 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
     public Transform holster;
-
+    private List<Package> packages = new();
+    
     public bool HasPackage()
     {
         return holster.childCount > 0;
@@ -15,7 +17,8 @@ public class Inventory : MonoBehaviour
         {
             var packageTransform = package.transform;
             packageTransform.position = holster.transform.position;
-            packageTransform.parent = holster;    
+            packageTransform.parent = holster;
+            packages.Add(package);
         }
     }
 
@@ -29,5 +32,11 @@ public class Inventory : MonoBehaviour
             Debug.Log($"Dropping off: {holster.GetChild(i).gameObject.name}");
             Destroy(holster.GetChild(i).gameObject);
         }
+        packages.Clear();
+    }
+
+    public Package GetPackage(int index)
+    {
+        return packages[index];
     }
 }
