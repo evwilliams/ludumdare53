@@ -11,6 +11,8 @@ public class PlayerController : MonoBehaviour
     public PlayerControls playerInput;
     public Transform bodyTransform;
 
+    public InputChannel inputChannel;
+
     private Vector3 moveInput = Vector3.zero;
     
     // Start is called before the first frame update
@@ -37,10 +39,12 @@ public class PlayerController : MonoBehaviour
         moveInput = Vector3.zero;
     }
 
-    private void MovementPerformed(InputAction.CallbackContext obj)
+    private void MovementPerformed(InputAction.CallbackContext context)
     {
-        var inputVec = obj.ReadValue<Vector2>();
+        var inputVec = context.ReadValue<Vector2>();
         moveInput = new Vector3(inputVec.x, 0, inputVec.y);
+        
+        inputChannel.MovementPerformed?.Invoke(context, moveInput);
     }
 
     private void Update()

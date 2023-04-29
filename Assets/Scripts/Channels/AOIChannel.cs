@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-[CreateAssetMenu]
+[CreateAssetMenu(menuName = "Channels/AreaOfInterest")]
 public class AOIChannel : ScriptableObject
 {
     public UnityAction<AreaOfInterest> Entered;

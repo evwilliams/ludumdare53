@@ -2,11 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
-public class PackageManager : MonoBehaviour
+public class GameDirector : MonoBehaviour
 {
-    private const int DestinationCountdownTime = 9;
+    public const int DestinationCountdownTime = 9;
     public Inventory playerInventory;
     public List<AreaOfInterest> sources = new();
     private List<AreaOfInterest> destinations = new();
@@ -20,6 +21,9 @@ public class PackageManager : MonoBehaviour
     public Package packagePrefab;
 
     public PackageType[] packageTypes;
+
+    [FormerlySerializedAs("startignStage")] public GameStage startingStage;
+    public GameStage currentStage;
     
     private void OnEnable()
     {
@@ -31,36 +35,49 @@ public class PackageManager : MonoBehaviour
     private void DropoffTimerExpired(AreaOfInterest destination)
     {
         Debug.Log($"{destination.name}'s timer expired");
-        AssignNewType(destination);
+        // AssignNewType(destination);
     }
 
     private void Start()
     {
-        foreach (var source in sources)
-        {
-            source.SetPackageType(packageTypes[0]);
-        }
-
-        SpawnDestination(0);
+        TransitionTo(startingStage);
     }
 
-    void SpawnDestination(int spawnNumber)
+    public void TransitionTo(GameStage gameStage)
     {
-        SpawnDestination(destinationLocations[spawnNumber]);
+        if (currentStage)
+            currentStage.OnStageExit();
+        currentStage = gameStage;
+        currentStage.OnStageEnter();
+    }
+
+    public AreaOfInterest SpawnDestination(int spawnNumber)
+    {
+        return SpawnDestination(destinationLocations[spawnNumber]);
     }
     
-    void SpawnDestination(Transform spawnLocation)
+    public AreaOfInterest SpawnDestination(Transform spawnLocation)
     {
         var destination = Instantiate(destinationPrefab, spawnLocation.position, Quaternion.identity);
         destinations.Add(destination);
-        AssignNewType(destination);
+        return destination;
     }
 
-    void AssignNewType(AreaOfInterest area)
+    public AreaOfInterest GetDestination(int index)
     {
-        area.SetPackageType(GetRandomPackageType());
-        area.StartTimer(DestinationCountdownTime);
+        return destinations[index];
     }
+    
+    public AreaOfInterest GetSource(int index)
+    {
+        return sources[index];
+    }
+
+    // public void AssignNewType(AreaOfInterest area)
+    // {
+    //     area.SetPackageType(GetRandomPackageType());
+    //     area.StartTimer(DestinationCountdownTime);
+    // }
 
     PackageType GetRandomPackageType()
     {
@@ -80,7 +97,7 @@ public class PackageManager : MonoBehaviour
         if (playerInventory.HasPackage())
             return;
         
-        Debug.Log($"Pickup entered: {area.name}");
+        // Debug.Log($"Pickup entered: {area.name}");
         var package = Instantiate(packagePrefab);
         package.SetPackageType(area.PackageType);
         playerInventory.TryPickup(package);
@@ -91,7 +108,7 @@ public class PackageManager : MonoBehaviour
         if (!playerInventory.HasPackage())
             return;
         
-        Debug.Log($"Dropoff entered: {area.name}");
+        // Debug.Log($"Dropoff entered: {area.name}");
         var pack = playerInventory.GetPackage(0);
         if (pack.PackageType == area.PackageType)
             playerInventory.TryDropoff();
