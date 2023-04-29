@@ -10,7 +10,6 @@ public class ControlsTutorialStage : GameStage
     public override void OnStageEnter()
     {
         Debug.Log($"Entering {name}");
-        gameDirector.SetStarRating(4);
         tutorialPanelRoot.SetActive(true);
         var destination = gameDirector.SpawnDestination(0);
         destination.SetPackageType(firstPackageType);

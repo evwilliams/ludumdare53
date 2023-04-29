@@ -2,12 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class GameDirector : MonoBehaviour
 {
     public const int DestinationCountdownTime = 9;
+    public const int StartingRating = 4;
+    
     public Inventory playerInventory;
     public List<AreaOfInterest> sources = new();
     private List<AreaOfInterest> destinations = new();
@@ -25,7 +26,14 @@ public class GameDirector : MonoBehaviour
     public GameStage startingStage;
     public GameStage currentStage;
 
-    public float starRating;
+    private float _starRating;
+    public float StarRating
+    {
+        get => _starRating;
+    }
+    
+    public float ratingSum = 0;
+    public int numRatingsReceived = 0;
     public FloatChannel starRatingChannel;
     
     private void OnEnable()
@@ -43,13 +51,28 @@ public class GameDirector : MonoBehaviour
 
     private void Start()
     {
+        InitRatingInfo();
         TransitionTo(startingStage);
     }
 
-    public void SetStarRating(float newValue)
+    private void InitRatingInfo()
     {
-        starRating = newValue;
-        starRatingChannel.ValueChanged?.Invoke(newValue);
+        ratingSum = StartingRating;
+        numRatingsReceived = 1;
+        UpdateStarRating();
+    }
+
+    public void RateDelivery(float rating)
+    {
+        ratingSum += rating;
+        numRatingsReceived++;
+        UpdateStarRating();
+    } 
+
+    public void UpdateStarRating()
+    {
+        _starRating = ratingSum / numRatingsReceived;
+        starRatingChannel.ValueChanged?.Invoke(_starRating);
     }
 
     public void TransitionTo(GameStage gameStage)
@@ -120,6 +143,9 @@ public class GameDirector : MonoBehaviour
         // Debug.Log($"Dropoff entered: {area.name}");
         var pack = playerInventory.GetPackage(0);
         if (pack.PackageType == area.PackageType)
+        {
             playerInventory.TryDropoff();
+            RateDelivery(5);
+        }
     }
 }
