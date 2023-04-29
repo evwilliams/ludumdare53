@@ -4,6 +4,7 @@ public class AreaOfInterest : MonoBehaviour
 {
     public AOIChannel outputChannel;
     public SpriteRenderer spriteRenderer;
+    public Timer timer;
     
     private PackageType _packageType;
     public PackageType PackageType

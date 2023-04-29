@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class PackageManager : MonoBehaviour
 {
@@ -32,8 +33,23 @@ public class PackageManager : MonoBehaviour
         for (int i = 0; i < packageTypes.Length; i++)
         {
 
-            destinations[i].SetPackageType(packageTypes[i]);
+            AssignNewType(destinations[i]);
         }
+    }
+
+    void AssignNewType(AreaOfInterest area)
+    {
+        area.SetPackageType(GetRandomPackageType());
+        area.timer.StartTimer(9, () =>
+        {
+            Debug.Log("Timer done");
+            AssignNewType(area);
+        });
+    }
+
+    PackageType GetRandomPackageType()
+    {
+        return packageTypes[Random.Range (0, packageTypes.Length)];
     }
 
     private void OnDisable()
