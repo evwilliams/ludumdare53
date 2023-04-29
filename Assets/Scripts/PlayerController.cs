@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed;
     public CharacterController characterController;
     public PlayerControls playerInput;
+    public SpriteRenderer spriteRenderer;
 
     private Vector3 moveInput = Vector3.zero;
     
@@ -45,6 +46,9 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         if (moveInput != Vector3.zero)
+        {
             characterController.Move(moveInput * (moveSpeed * Time.deltaTime));
+            spriteRenderer.flipX = moveInput.x < 0;
+        }
     }
 }
