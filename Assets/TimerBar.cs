@@ -11,7 +11,7 @@ public class TimerBar : MonoBehaviour
         slider.enabled = !timer.isDone;
         if (!timer.isDone)
         {
-            slider.value = timer.GetProgress() * slider.maxValue;
+            slider.value = timer.GetRemainingRatio() * slider.maxValue;
         }
     }
 }

@@ -35,6 +35,16 @@ public class Timer : MonoBehaviour
         return Time.time - startTime;
     }
 
+    public float GetTimeRemaining()
+    {
+        return duration - GetTimeElapsed();
+    }
+
+    public float GetRemainingRatio()
+    {
+        return GetTimeRemaining() / duration;
+    }
+
     public float GetProgress()
     {
         return GetTimeElapsed() / duration;
