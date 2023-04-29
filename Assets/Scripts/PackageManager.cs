@@ -12,9 +12,10 @@ public class PackageManager : MonoBehaviour
     public AOIChannel pickupChannel;
     public AOIChannel dropoffChannel;
 
-    public GameObject packagePrefab;
-    public GameObject package;
+    public Package packagePrefab;
 
+    public PackageType testPackageType;
+    
     private void OnEnable()
     {
         pickupChannel.Entered += PickupEntered;
@@ -30,11 +31,9 @@ public class PackageManager : MonoBehaviour
     private void PickupEntered(AreaOfInterest area)
     {
         Debug.Log($"Pickup entered: {area.name}");
-        if (package == null)
-        {
-            package = Instantiate(packagePrefab);
-        }
-        playerInventory.TryPickup(package.transform);
+        var package = Instantiate(packagePrefab);
+        package.SetPackageType(testPackageType);
+        playerInventory.TryPickup(package);
     }
 
     private void DropoffEntered(AreaOfInterest area)

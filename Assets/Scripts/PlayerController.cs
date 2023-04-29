@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed;
     public CharacterController characterController;
     public PlayerControls playerInput;
-    public SpriteRenderer spriteRenderer;
+    public Transform bodyTransform;
 
     private Vector3 moveInput = Vector3.zero;
     
@@ -48,7 +48,9 @@ public class PlayerController : MonoBehaviour
         if (moveInput != Vector3.zero)
         {
             characterController.Move(moveInput * (moveSpeed * Time.deltaTime));
-            spriteRenderer.flipX = moveInput.x < 0;
+            var bodyTransformLocalScale = bodyTransform.localScale;
+            bodyTransformLocalScale.x = moveInput.x > 0 ? 1 : -1;
+            bodyTransform.localScale = bodyTransformLocalScale;
         }
     }
 }

@@ -9,12 +9,13 @@ public class Inventory : MonoBehaviour
         return holster.childCount > 0;
     }
 
-    public void TryPickup(Transform package)
+    public void TryPickup(Package package)
     {
         if (!HasPackage())
         {
-            package.transform.position = holster.transform.position;
-            package.parent = holster;    
+            var packageTransform = package.transform;
+            packageTransform.position = holster.transform.position;
+            packageTransform.parent = holster;    
         }
     }
 
