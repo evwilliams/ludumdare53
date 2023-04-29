@@ -22,8 +22,11 @@ public class GameDirector : MonoBehaviour
 
     public PackageType[] packageTypes;
 
-    [FormerlySerializedAs("startignStage")] public GameStage startingStage;
+    public GameStage startingStage;
     public GameStage currentStage;
+
+    public float starRating;
+    public FloatChannel starRatingChannel;
     
     private void OnEnable()
     {
@@ -41,6 +44,12 @@ public class GameDirector : MonoBehaviour
     private void Start()
     {
         TransitionTo(startingStage);
+    }
+
+    public void SetStarRating(float newValue)
+    {
+        starRating = newValue;
+        starRatingChannel.ValueChanged?.Invoke(newValue);
     }
 
     public void TransitionTo(GameStage gameStage)
