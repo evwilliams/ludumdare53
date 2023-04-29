@@ -1,17 +1,16 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AreaOfInterest : MonoBehaviour
 {
+    public AOIChannel outputChannel;
+    
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log($"{name} entered");
+        outputChannel.Entered?.Invoke(this);
     }
 
     private void OnTriggerExit(Collider other)
     {
-        Debug.Log($"{name} exited");
+        outputChannel.Exited?.Invoke(this);
     }
 }
