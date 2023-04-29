@@ -177,7 +177,7 @@ GameObject:
   - component: {fileID: 324869063279212698}
   - component: {fileID: 5530714655840920446}
   m_Layer: 0
-  m_Name: home_placeholder
+  m_Name: Dest_SpriteRender
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -390,7 +390,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6730740342078177931}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 15, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -427,7 +427,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   outputChannel: {fileID: 11400000, guid: a4630b9d6bcf0434ba922a88335acf1a, type: 2}
   spriteRenderer: {fileID: 5530714655840920446}
-  timer: {fileID: 6252062933769769507}
+  _timer: {fileID: 6252062933769769507}
 --- !u!114 &6252062933769769507
 MonoBehaviour:
   m_ObjectHideFlags: 0

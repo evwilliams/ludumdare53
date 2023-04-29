@@ -667,7 +667,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   outputChannel: {fileID: 11400000, guid: 64fde075d58e24a2b91f3ffd05619eca, type: 2}
   spriteRenderer: {fileID: 8843357101818615448}
-  timer: {fileID: 0}
+  _timer: {fileID: 484029092621614694}
 --- !u!114 &484029092621614694
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -697,7 +697,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timer: {fileID: 484029092621614694}
-  slider: {fileID: 60342978686224380}
+  slider: {fileID: 0}
 --- !u!1 &7731018370304071167
 GameObject:
   m_ObjectHideFlags: 0

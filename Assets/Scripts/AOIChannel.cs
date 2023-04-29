@@ -6,4 +6,5 @@ public class AOIChannel : ScriptableObject
 {
     public UnityAction<AreaOfInterest> Entered;
     public UnityAction<AreaOfInterest> Exited;
+    public UnityAction<AreaOfInterest> TimerExpired;
 }

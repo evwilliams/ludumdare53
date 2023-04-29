@@ -1,11 +1,13 @@
+using System;
 using UnityEngine;
 
 public class AreaOfInterest : MonoBehaviour
 {
     public AOIChannel outputChannel;
     public SpriteRenderer spriteRenderer;
-    public Timer timer;
     
+    [SerializeField]
+    private Timer _timer;
     private PackageType _packageType;
     public PackageType PackageType
     {
@@ -17,6 +19,16 @@ public class AreaOfInterest : MonoBehaviour
     {
         _packageType = pType;
         spriteRenderer.color = pType.color;
+    }
+
+    public void StartTimer(float seconds)
+    {
+        _timer.StartTimer(seconds, OnTimerDone);
+    }
+
+    private void OnTimerDone()
+    {
+        outputChannel.TimerExpired?.Invoke(this);
     }
 
     private void OnTriggerEnter(Collider other)

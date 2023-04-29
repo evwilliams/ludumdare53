@@ -6,6 +6,7 @@ using Random = UnityEngine.Random;
 
 public class PackageManager : MonoBehaviour
 {
+    private const int DestinationCountdownTime = 9;
     public Inventory playerInventory;
     public List<AreaOfInterest> sources = new();
     public List<AreaOfInterest> destinations = new();
@@ -21,6 +22,13 @@ public class PackageManager : MonoBehaviour
     {
         pickupChannel.Entered += PickupEntered;
         dropoffChannel.Entered += DropoffEntered;
+        dropoffChannel.TimerExpired += DropoffTimerExpired;
+    }
+
+    private void DropoffTimerExpired(AreaOfInterest destination)
+    {
+        Debug.Log($"{destination.name}'s timer expired");
+        AssignNewType(destination);
     }
 
     private void Start()
@@ -29,22 +37,17 @@ public class PackageManager : MonoBehaviour
         {
             source.SetPackageType(packageTypes[0]);
         }
-        
-        for (int i = 0; i < packageTypes.Length; i++)
-        {
 
-            AssignNewType(destinations[i]);
+        foreach (var destination in destinations)
+        {
+            AssignNewType(destination);
         }
     }
 
     void AssignNewType(AreaOfInterest area)
     {
         area.SetPackageType(GetRandomPackageType());
-        area.timer.StartTimer(9, () =>
-        {
-            Debug.Log("Timer done");
-            AssignNewType(area);
-        });
+        area.StartTimer(DestinationCountdownTime);
     }
 
     PackageType GetRandomPackageType()
@@ -56,6 +59,7 @@ public class PackageManager : MonoBehaviour
     {
         pickupChannel.Entered -= PickupEntered;
         dropoffChannel.Entered -= DropoffEntered;
+        dropoffChannel.TimerExpired -= DropoffTimerExpired;
     }
 
     private void PickupEntered(AreaOfInterest area)
