@@ -10,6 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 71d4759592e6e40409f571a089af8c2e, type: 3}
-  m_Name: Green
+  m_Name: Yellow
   m_EditorClassIdentifier: 
-  color: {r: 0.3647059, g: 0.9803922, b: 0.4156863, a: 1}
+  color: {r: 1, g: 0.7607844, b: 0.054901965, a: 1}
+  sprite: {fileID: 21300000, guid: bacb81d3a8b154232a77d48458a4c480, type: 3}

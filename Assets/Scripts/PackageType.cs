@@ -4,4 +4,5 @@ using UnityEngine;
 public class PackageType : ScriptableObject
 {
     public Color color;
+    public Sprite sprite;
 }
