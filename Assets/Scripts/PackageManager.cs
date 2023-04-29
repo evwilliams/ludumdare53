@@ -9,7 +9,10 @@ public class PackageManager : MonoBehaviour
     private const int DestinationCountdownTime = 9;
     public Inventory playerInventory;
     public List<AreaOfInterest> sources = new();
-    public List<AreaOfInterest> destinations = new();
+    private List<AreaOfInterest> destinations = new();
+
+    public AreaOfInterest destinationPrefab;
+    public List<Transform> destinationLocations = new();
 
     public AOIChannel pickupChannel;
     public AOIChannel dropoffChannel;
@@ -38,10 +41,19 @@ public class PackageManager : MonoBehaviour
             source.SetPackageType(packageTypes[0]);
         }
 
-        foreach (var destination in destinations)
-        {
-            AssignNewType(destination);
-        }
+        SpawnDestination(0);
+    }
+
+    void SpawnDestination(int spawnNumber)
+    {
+        SpawnDestination(destinationLocations[spawnNumber]);
+    }
+    
+    void SpawnDestination(Transform spawnLocation)
+    {
+        var destination = Instantiate(destinationPrefab, spawnLocation.position, Quaternion.identity);
+        destinations.Add(destination);
+        AssignNewType(destination);
     }
 
     void AssignNewType(AreaOfInterest area)
