@@ -1788,9 +1788,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioPlayer: {fileID: 2084196645}
-  sound_SuccessfulPickup: {fileID: 8300000, guid: c287cb27cb2f5421696e5889f01c2c09, type: 3}
+  sound_SuccessfulPickup: {fileID: 8300000, guid: 5c3c0b7a41167406aa081ef153517706, type: 3}
   sound_MissedPickup: {fileID: 8300000, guid: a1026af983104484bb099bec8d742419, type: 3}
-  sound_IncorrectPickup: {fileID: 8300000, guid: a1026af983104484bb099bec8d742419, type: 3}
+  sound_IncorrectPickup: {fileID: 8300000, guid: 2e825facd445a4c28a57bc3a9e64f4f5, type: 3}
   destinationChannel: {fileID: 11400000, guid: a4630b9d6bcf0434ba922a88335acf1a, type: 2}
 --- !u!82 &2084196645
 AudioSource:
