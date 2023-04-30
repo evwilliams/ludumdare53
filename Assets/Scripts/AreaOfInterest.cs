@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -44,6 +45,14 @@ public abstract class AreaOfInterest : MonoBehaviour
             return;
         
         GetOutputChannel().Entered?.Invoke(this);
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (_pendingDestroy)
+            return;
+        
+        GetOutputChannel().Stayed?.Invoke(this);
     }
 
     private void OnTriggerExit(Collider other)

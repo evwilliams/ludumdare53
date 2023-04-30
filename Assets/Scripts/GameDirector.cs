@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class GameDirector : MonoBehaviour
 {
     public const int DestinationCountdownTime = 9;
-    public const int PackageCreationTime = 4;
+    public const int PackageCreationTime = 3;
     public const int StartingRating = 4;
 
     public const int MaxRating = 5;
@@ -56,10 +56,11 @@ public class GameDirector : MonoBehaviour
     private float _ratingSum = 0;
     private int _numRatingsReceived = 0;
     public FloatChannel starRatingChannel;
-    
+
     private void OnEnable()
     {
         pickupChannel.Entered += PickupEntered;
+        pickupChannel.Stayed += OnStayedInProducer;
         destinationChannel.Entered += DropoffEntered;
         destinationChannel.TimerExpired += DropoffTimerExpired;
     }
@@ -199,22 +200,31 @@ public class GameDirector : MonoBehaviour
         return sources[index];
     }
 
-    // public void AssignNewType(AreaOfInterest area)
-    // {
-    //     area.SetPackageType(GetRandomPackageType());
-    //     area.StartTimer(DestinationCountdownTime);
-    // }
-
-    
-
     private void OnDisable()
     {
         pickupChannel.Entered -= PickupEntered;
+        pickupChannel.Stayed -= OnStayedInProducer;
         destinationChannel.Entered -= DropoffEntered;
         destinationChannel.TimerExpired -= DropoffTimerExpired;
     }
 
     private void PickupEntered(AreaOfInterest area)
+    {
+        if (!playerInventory.CanTakePackage())
+            return;
+
+        var producer = area as Producer;
+        if (!producer.HasPackageReady())
+            return;
+        
+        // Debug.Log($"Pickup entered: {area.name}");
+        var package = Instantiate(packagePrefab);
+        package.SetPackageType(area.PackageType);
+        playerInventory.TryPickup(package);
+        producer.PickupPackage();
+    }
+    
+    private void OnStayedInProducer(AreaOfInterest area)
     {
         if (!playerInventory.CanTakePackage())
             return;

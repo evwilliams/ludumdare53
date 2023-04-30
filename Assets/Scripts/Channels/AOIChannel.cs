@@ -5,6 +5,7 @@ using UnityEngine.Events;
 public class AOIChannel : ScriptableObject
 {
     public UnityAction<AreaOfInterest> Entered;
+    public UnityAction<AreaOfInterest> Stayed;
     public UnityAction<AreaOfInterest> Exited;
     public UnityAction<AreaOfInterest> TimerExpired;
 }
