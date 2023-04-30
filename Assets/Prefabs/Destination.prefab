@@ -538,10 +538,13 @@ MonoBehaviour:
   outputChannel: {fileID: 11400000, guid: a4630b9d6bcf0434ba922a88335acf1a, type: 2}
   successResponses:
   - {fileID: 11400000, guid: 55ca172a8e9bc4a54b9c29e605f93097, type: 2}
-  - {fileID: 11400000, guid: c130d96b5640941769264d044c7487ca, type: 2}
   mismatchResponses:
   - {fileID: 11400000, guid: b95a899d3b23540df90fb3a51340e915, type: 2}
+  - {fileID: 11400000, guid: 5ab788e629fac4d9fb170d0dea6129fc, type: 2}
+  - {fileID: 11400000, guid: bfa024ce11dc448949166596fc561102, type: 2}
+  - {fileID: 11400000, guid: ba580af0328e14ffaae4340bc5b6e1d2, type: 2}
   - {fileID: 11400000, guid: d5bbb684043464ebb99c2262b21c9ce2, type: 2}
+  - {fileID: 11400000, guid: efa16ba03dbc340d4b6c4b55e74ff87a, type: 2}
   missResponses:
   - {fileID: 11400000, guid: 9fff0c87f4ccf4a04adab19c66dbed73, type: 2}
 --- !u!1 &8974127760397231323
