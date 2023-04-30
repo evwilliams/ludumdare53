@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ControlsTutorialStage : GameStage
@@ -12,7 +10,7 @@ public class ControlsTutorialStage : GameStage
         // Debug.Log($"Entering {name}");
         tutorialPanelRoot.SetActive(true);
         gameDirector.SpawnDestination(0, firstPackageType, false);
-        gameDirector.InstantlyCreatePackage(0, firstPackageType, false);
+        gameDirector.BeginCreatingPackage(0, firstPackageType);
     }
 
     public override void OnStageExit()
