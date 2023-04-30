@@ -13,34 +13,31 @@ public class Destination : AreaOfInterest
         return responses[Random.Range(0, responses.Length)];
     }
 
-    private void DisplayRandomResponse(Response[] responses)
+    private void DisplayRandomResponse(Response[] responses, int rating)
     {
         var response = GetRandomResponse(responses);
-        bubbleText.text = response.displayText;
+        bubbleText.text = $"{response.displayText}\nRated {rating} {StarTextForRating(rating)}!";
         outputChannel.ResponseDisplayed(response);
-        // bubbleText.text = $"Rated {rating} {StarTextForRating(rating)}!";
     }
     
     public void DropoffSucceeded(int rating)
     {
         _pendingDestroy = true;
-        DisplayRandomResponse(successResponses);
+        DisplayRandomResponse(successResponses, rating);
         Destroy(gameObject, 2);
     }
     
     public void DropoffMismatch(int rating)
     {
         _pendingDestroy = true;
-        DisplayRandomResponse(mismatchResponses);
-        // bubbleText.text = $"That's not my baby! {rating} {StarTextForRating(rating)}!";
+        DisplayRandomResponse(mismatchResponses, rating);
         Destroy(gameObject, 2);
     }
     
     public void DropoffMissed(int rating)
     {
         _pendingDestroy = true;
-        DisplayRandomResponse(missResponses);
-        // bubbleText.text = $"I'm taking my stork business elsewhere! {rating} {StarTextForRating(rating)}!";
+        DisplayRandomResponse(missResponses, rating);
         Destroy(gameObject, 2);
     }
 
