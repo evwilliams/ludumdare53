@@ -9,6 +9,8 @@ public class Stage_04 : GameStage
     public Inventory playerInventory;
     public PackageType[] allPackageTypes;
 
+    public int numDeliveriesInThisStage = 0;
+
     // This stage is activated if the player successfully completes a dropoff in Stage_02
     private void SuccessfulDropoffCountChanged(AreaOfInterest arg0, int successCount)
     {
@@ -16,6 +18,7 @@ public class Stage_04 : GameStage
             gameDirector.TransitionTo(this);
         else if (gameDirector.currentStage == this)
         {
+            numDeliveriesInThisStage++;
             KeepSpawningDestinations(GetRandomPackageType());
         }
     }
@@ -71,13 +74,19 @@ public class Stage_04 : GameStage
     private void IncorrectDropoff(Destination destination, int i)
     {
         if (gameDirector.currentStage == this)
+        {
+            numDeliveriesInThisStage++;
             KeepSpawningDestinations(destination.PackageType);
+        }
     }
 
     private void MissedDropoff(Destination destination, int i)
     {
         if (gameDirector.currentStage == this)
+        {
+            numDeliveriesInThisStage++;
             KeepSpawningDestinations(destination.PackageType);
+        }
     }
     
     private void ProducerBecameAvailable(Producer producer)
