@@ -463,10 +463,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4577ab1f8a9484efd8aaf1e05e733b07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  outputChannel: {fileID: 11400000, guid: a4630b9d6bcf0434ba922a88335acf1a, type: 2}
   spriteRenderer: {fileID: 5530714655840920446}
   bubbleText: {fileID: 7106855439962327353}
   _timer: {fileID: 6252062933769769507}
+  outputChannel: {fileID: 11400000, guid: a4630b9d6bcf0434ba922a88335acf1a, type: 2}
+  successResponses:
+  - {fileID: 11400000, guid: 55ca172a8e9bc4a54b9c29e605f93097, type: 2}
+  - {fileID: 11400000, guid: c130d96b5640941769264d044c7487ca, type: 2}
+  mismatchResponses:
+  - {fileID: 11400000, guid: b95a899d3b23540df90fb3a51340e915, type: 2}
+  - {fileID: 11400000, guid: d5bbb684043464ebb99c2262b21c9ce2, type: 2}
+  missResponses:
+  - {fileID: 11400000, guid: 9fff0c87f4ccf4a04adab19c66dbed73, type: 2}
 --- !u!1 &8974127760397231323
 GameObject:
   m_ObjectHideFlags: 0
