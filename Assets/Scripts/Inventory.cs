@@ -1,25 +1,39 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
-    public Transform holster;
+    public Transform[] holsters;
     private List<Package> packages = new();
-    public bool allowTwoPackages = false;
+    public int maxPackagesAllowed = 1;
+
+    public bool CanTakePackage()
+    {
+        return packages.Count < maxPackagesAllowed;
+    }
     
     public bool HasPackage()
     {
-        return holster.childCount > 0;
+        return packages.Count > 0;
     }
 
     public void TryPickup(Package package)
     {
-        if (!HasPackage())
+        if (CanTakePackage())
         {
-            var packageTransform = package.transform;
-            packageTransform.position = holster.transform.position;
-            packageTransform.parent = holster;
             packages.Add(package);
+            PositionPackages();
+        }
+    }
+
+    public void PositionPackages()
+    {
+        for (int i = 0; i < packages.Count; i++)
+        {
+            var packageTransform = packages[i].transform;
+            packageTransform.position = holsters[i].transform.position;
+            packageTransform.parent = holsters[i];
         }
     }
 
@@ -27,17 +41,15 @@ public class Inventory : MonoBehaviour
     {
         if (!HasPackage())
             return;
-        
-        for (int i = holster.childCount - 1; i >= 0; i--)
-        {
-            // Debug.Log($"Dropping off: {holster.GetChild(i).gameObject.name}");
-            Destroy(holster.GetChild(i).gameObject);
-        }
-        packages.Clear();
+
+        var packageToDropoff = GetPackageForDropoff();
+        Debug.Log($"Dropping of package type: {packageToDropoff.PackageType}");
+        packages.Remove(packageToDropoff);
+        Destroy(packageToDropoff.gameObject);
     }
 
-    public Package GetPackage(int index)
+    public Package GetPackageForDropoff()
     {
-        return packages[index];
+        return packages.Last();
     }
 }

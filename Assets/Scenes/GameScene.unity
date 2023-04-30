@@ -1181,10 +1181,8 @@ MonoBehaviour:
   - {fileID: 477018874}
   destinationChannel: {fileID: 11400000, guid: a4630b9d6bcf0434ba922a88335acf1a, type: 2}
   playerInventory: {fileID: 1231731198}
-  packageTypes:
-  - {fileID: 11400000, guid: d7407492e53064cc9a6d3f256ad514b0, type: 2}
-  - {fileID: 11400000, guid: 12e4cea02b2dc40ad8ddf221eb12b2c7, type: 2}
-  - {fileID: 11400000, guid: 8fd501e7c054a42578102f10faf26b86, type: 2}
+  packageType1: {fileID: 11400000, guid: 8fd501e7c054a42578102f10faf26b86, type: 2}
+  packageType2: {fileID: 11400000, guid: 12e4cea02b2dc40ad8ddf221eb12b2c7, type: 2}
 --- !u!1 &917373560
 GameObject:
   m_ObjectHideFlags: 0

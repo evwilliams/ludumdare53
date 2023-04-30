@@ -6,7 +6,8 @@ public class Stage_03 : GameStage
     public DestinationChannel destinationChannel;
 
     public Inventory playerInventory;
-    public PackageType[] packageTypes; // Expects at least 3
+    public PackageType packageType1;
+    public PackageType packageType2;
 
     // This stage is activated if the player successfully completes a dropoff in Stage_02
     private void SuccessfulDropoffCountChanged(AreaOfInterest arg0, int successCount)
@@ -32,16 +33,16 @@ public class Stage_03 : GameStage
     public override void OnStageEnter()
     {
         Debug.Log($"Entering {name}");
-        playerInventory.allowTwoPackages = true;
+        playerInventory.maxPackagesAllowed = 2;
         
-        SetupSourceAndDestination(0, packageTypes[1]);
-        SetupSourceAndDestination(1, packageTypes[2]);
+        SetupSourceAndDestination(packageType1);
+        SetupSourceAndDestination(packageType2);
     }
 
-    private void SetupSourceAndDestination(int sourceIndex, PackageType packageType)
+    private void SetupSourceAndDestination(PackageType packageType)
     {
         gameDirector.SpawnDestinationWherePossible(packageType);
-        gameDirector.BeginCreatingPackage(sourceIndex, packageType);
+        gameDirector.BeginCreatingPackage(packageType == packageType1 ? 0 : 1, packageType);
     }
 
     public override void OnStageExit()
@@ -69,6 +70,6 @@ public class Stage_03 : GameStage
 
     private void KeepSpawningDestinations(PackageType missedType)
     {
-        gameDirector.SpawnDestinationWherePossible(missedType);
+        SetupSourceAndDestination(missedType);
     }
 }

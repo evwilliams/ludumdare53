@@ -218,8 +218,7 @@ public class GameDirector : MonoBehaviour
 
     private void PickupEntered(AreaOfInterest area)
     {
-        // Only one package for now
-        if (playerInventory.HasPackage())
+        if (!playerInventory.CanTakePackage())
             return;
 
         var producer = area as Producer;
@@ -251,7 +250,7 @@ public class GameDirector : MonoBehaviour
         var destination = area as Destination;
 
         destination.CancelTimer();
-        var pack = playerInventory.GetPackage(0);
+        var pack = playerInventory.GetPackageForDropoff();
         bool packageTypeMatches = pack.PackageType == destination.PackageType;
         int rating = GetDeliveryRating(packageTypeMatches, destination.TimeRemainingRatio);
         RateDelivery(rating);
