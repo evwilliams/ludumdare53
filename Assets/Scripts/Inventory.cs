@@ -22,7 +22,7 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public void TryDropoff()
+    public void DropoffPackage()
     {
         if (!HasPackage())
             return;

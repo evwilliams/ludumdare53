@@ -9,15 +9,15 @@ public class ControlsTutorialStage : GameStage
     
     public override void OnStageEnter()
     {
-        Debug.Log($"Entering {name}");
+        // Debug.Log($"Entering {name}");
         tutorialPanelRoot.SetActive(true);
-        gameDirector.SpawnDestination(0, firstPackageType);
+        gameDirector.SpawnDestination(0, firstPackageType, false);
         gameDirector.InstantlyCreatePackage(0, firstPackageType);
     }
 
     public override void OnStageExit()
     {
-        Debug.Log($"Exiting {name}");
+        // Debug.Log($"Exiting {name}");
         tutorialPanelRoot.SetActive(false);
     }
 }

@@ -1,13 +1,16 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class Stage_01 : GameStage
 {
     public InputChannel inputChannel;
-    private AreaOfInterest firstDestination;
+
+    // This stage is activated if the player moves during the tutorial stage
+    private void MovementPerformed(InputAction.CallbackContext arg0, Vector2 arg1)
+    {
+        if (canTransitionFrom.Contains(gameDirector.currentStage))
+            gameDirector.TransitionTo(this);
+    }
 
     private void OnEnable()
     {
@@ -19,16 +22,10 @@ public class Stage_01 : GameStage
         inputChannel.MovementPerformed -= MovementPerformed;
     }
 
-    private void MovementPerformed(InputAction.CallbackContext arg0, Vector2 arg1)
-    {
-        if (canTransitionFrom.Contains(gameDirector.currentStage))
-            gameDirector.TransitionTo(this);
-    }
-
     public override void OnStageEnter()
     {
         Debug.Log($"Entering {name}");
-        firstDestination = gameDirector.GetDestination(0);
+        var firstDestination = gameDirector.GetDestination(0);
         firstDestination.StartTimer(GameDirector.DestinationCountdownTime);
     }
 

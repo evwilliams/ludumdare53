@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -9,13 +10,15 @@ public class GameDirector : MonoBehaviour
     public const int DestinationCountdownTime = 9;
     public const int PackageCreationTime = 6;
     public const int StartingRating = 4;
+
+    public const int RatingForTimingMiss = 0;
     
     public Inventory playerInventory;
     public List<AreaOfInterest> sources = new();
     private List<AreaOfInterest> destinations = new();
 
     public AreaOfInterest destinationPrefab;
-    public List<Transform> destinationLocations = new();
+    public List<SpawnPoint> destinationLocations = new();
 
     public AOIChannel pickupChannel;
     public AOIChannel dropoffChannel;
@@ -27,6 +30,30 @@ public class GameDirector : MonoBehaviour
     public GameStage startingStage;
     public GameStage currentStage;
 
+    private int _successfulDropoffs = 0;
+    public int SuccessfulDropoffs
+    {
+        get => _successfulDropoffs;
+    }
+    public IntChannel successfulDropoffsChannel;
+    
+    
+    
+    private int _missedDropoffs = 0;
+    public int MissedDropoffs
+    {
+        get => _missedDropoffs;
+    }
+    public IntChannel missedDropoffsChannel;
+    
+    private int _incorrectDropoffs = 0;
+    public int IncorrectDropoffs
+    {
+        get => _incorrectDropoffs;
+    }
+    public IntChannel incorrectDropoffsChannel;
+    
+    
     private float _starRating;
     public float StarRating
     {
@@ -42,12 +69,6 @@ public class GameDirector : MonoBehaviour
         pickupChannel.Entered += PickupEntered;
         dropoffChannel.Entered += DropoffEntered;
         dropoffChannel.TimerExpired += DropoffTimerExpired;
-    }
-
-    private void DropoffTimerExpired(AreaOfInterest destination)
-    {
-        Debug.Log($"{destination.name}'s timer expired");
-        // AssignNewType(destination);
     }
 
     private void Start()
@@ -84,16 +105,63 @@ public class GameDirector : MonoBehaviour
         currentStage.OnStageEnter();
     }
 
-    public AreaOfInterest SpawnDestination(int spawnNumber, PackageType packageType)
+    [CanBeNull]
+    private SpawnPoint GetAvailableSpawn()
     {
-        return SpawnDestination(destinationLocations[spawnNumber], packageType);
+        foreach (var spawnPoint in destinationLocations)
+        {
+            if (spawnPoint.Available)
+                return spawnPoint;
+        }
+
+        return null;
+    }
+
+    [CanBeNull]
+    private SpawnPoint FindMatchingSpawnPoint(AreaOfInterest destination)
+    {
+        foreach (var spawnPoint in destinationLocations)
+        {
+            if (spawnPoint.areaOfInterest == destination)
+            {
+                return spawnPoint;
+            }
+        }
+
+        return null;
+    }
+
+    [CanBeNull]
+    public AreaOfInterest SpawnDestinationWherePossible(PackageType packageType, bool andStartTimer = true)
+    {
+        var availableSpawn = GetAvailableSpawn();
+        if (availableSpawn == null)
+        {
+            Debug.LogError("Unable to find available spawn");
+            return null;
+        }
+        
+        var destination =  SpawnDestination(availableSpawn, packageType);
+        if (andStartTimer)
+            destination.StartTimer(DestinationCountdownTime);
+        return destination;
     }
     
-    public AreaOfInterest SpawnDestination(Transform spawnLocation, PackageType packageType)
+    public AreaOfInterest SpawnDestination(int spawnNumber, PackageType packageType, bool andStartTimer = true)
     {
-        var destination = Instantiate(destinationPrefab, spawnLocation.position, Quaternion.identity);
+        var destination = SpawnDestination(destinationLocations[spawnNumber], packageType);
+        if (andStartTimer)
+            destination.StartTimer(DestinationCountdownTime);
+        return destination;
+    }
+    
+    private AreaOfInterest SpawnDestination(SpawnPoint spawnPoint, PackageType packageType)
+    {
+        
+        var destination = Instantiate(destinationPrefab, spawnPoint.transform.position, Quaternion.identity);
         destination.SetPackageType(packageType);
         destination.spriteRenderer.sprite = packageType.destinationSprite;
+        spawnPoint.areaOfInterest = destination;
         destinations.Add(destination);
         return destination;
     }
@@ -158,7 +226,7 @@ public class GameDirector : MonoBehaviour
     private int GetDeliveryRating(bool packageTypesMatch, float timeRemainingRatio)
     {
         if (!packageTypesMatch)
-            return 0;
+            return 1;
 
         const float baselineScore = 1;
         const float maxScore = 5;
@@ -169,17 +237,53 @@ public class GameDirector : MonoBehaviour
     {
         if (!playerInventory.HasPackage())
             return;
-        
-        // Debug.Log($"Dropoff entered: {area.name}");
-        var pack = playerInventory.GetPackage(0);
-        if (pack.PackageType == area.PackageType)
-        {
-            area.CancelTimer();
-            playerInventory.TryDropoff();
 
-            int rating = GetDeliveryRating(true, area.TimeRemainingRatio);
-            RateDelivery(rating);
+        area.CancelTimer();
+        var pack = playerInventory.GetPackage(0);
+        bool packageTypeMatches = pack.PackageType == area.PackageType;
+        int rating = GetDeliveryRating(packageTypeMatches, area.TimeRemainingRatio);
+        RateDelivery(rating);
+        
+        if (packageTypeMatches)
+        {
             area.DropoffSucceeded(rating);
+            IncrementSuccessfulDropoffs();
         }
+        else
+        {
+            area.DropoffMismatch(rating);
+            IncrementIncorrectDropoffs();
+        }
+        playerInventory.DropoffPackage();
+        FindMatchingSpawnPoint(area)?.SetAreaOfInterest(null);
+    }
+    
+    private void DropoffTimerExpired(AreaOfInterest destination)
+    {
+        Debug.Log($"{destination.name}'s timer expired");
+
+        var rating = RatingForTimingMiss;
+        RateDelivery(rating);
+        IncrementMissedDropoffs();
+        destination.DropoffMissed(rating);
+        FindMatchingSpawnPoint(destination)?.SetAreaOfInterest(null);
+    }
+
+    private void IncrementSuccessfulDropoffs()
+    {
+        _successfulDropoffs++;
+        successfulDropoffsChannel.ValueChanged?.Invoke(_successfulDropoffs);
+    }
+
+    private void IncrementMissedDropoffs()
+    {
+        _missedDropoffs++;
+        missedDropoffsChannel.ValueChanged?.Invoke(_missedDropoffs);
+    }
+    
+    private void IncrementIncorrectDropoffs()
+    {
+        _incorrectDropoffs++;
+        incorrectDropoffsChannel.ValueChanged?.Invoke(_incorrectDropoffs);
     }
 }
