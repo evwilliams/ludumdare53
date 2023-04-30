@@ -21,7 +21,10 @@ public class GameDirector : MonoBehaviour
 
     public AOIChannel pickupChannel;
     public DestinationChannel destinationChannel;
-
+    public AOIChannel cloudChannel;
+    
+    public Cloud cloudPrefab;
+    public Transform[] cloudSpawnPoints;
     public Package packagePrefab;
 
     public GameStage startingStage;
@@ -44,9 +47,7 @@ public class GameDirector : MonoBehaviour
     {
         get => _incorrectDropoffs;
     }
-    
-    
-    
+
     private float _starRating;
     public float StarRating
     {
@@ -63,6 +64,16 @@ public class GameDirector : MonoBehaviour
         pickupChannel.Stayed += OnStayedInProducer;
         destinationChannel.Entered += DropoffEntered;
         destinationChannel.TimerExpired += DropoffTimerExpired;
+        cloudChannel.Entered += OnCloudCollision;
+    }
+    
+    private void OnDisable()
+    {
+        pickupChannel.Entered -= PickupEntered;
+        pickupChannel.Stayed -= OnStayedInProducer;
+        destinationChannel.Entered -= DropoffEntered;
+        destinationChannel.TimerExpired -= DropoffTimerExpired;
+        cloudChannel.Entered -= OnCloudCollision;
     }
 
     private void Start()
@@ -200,14 +211,6 @@ public class GameDirector : MonoBehaviour
         return sources[index];
     }
 
-    private void OnDisable()
-    {
-        pickupChannel.Entered -= PickupEntered;
-        pickupChannel.Stayed -= OnStayedInProducer;
-        destinationChannel.Entered -= DropoffEntered;
-        destinationChannel.TimerExpired -= DropoffTimerExpired;
-    }
-
     private void PickupEntered(AreaOfInterest area)
     {
         if (!playerInventory.CanTakePackage())
@@ -308,7 +311,24 @@ public class GameDirector : MonoBehaviour
     private void OnIncorrectDropoff(Destination destination)
     {
         _incorrectDropoffs++;
+     
         destinationChannel.IncorrectDropoff?.Invoke(destination, _incorrectDropoffs);
+    }
+
+    Transform GetRandomCloudSpawnPoint()
+    {
+        return cloudSpawnPoints[Random.Range (0, cloudSpawnPoints.Length)];
+    }
+    
+    public void SpawnCloud()
+    {
+        Instantiate(cloudPrefab, GetRandomCloudSpawnPoint().position, Quaternion.identity);
+    }
+    
+    private void OnCloudCollision(AreaOfInterest arg0)
+    {
+        Debug.Log("Cloud collision!");
+        playerInventory.MixupPackages();
     }
 
     public void RestartGame()

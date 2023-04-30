@@ -39,6 +39,15 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    public void MixupPackages()
+    {
+        if (packages.Count < 2)
+            return;
+
+        (packages[0], packages[1]) = (packages[1], packages[0]);
+        PositionPackages();
+    }
+
     public void DropoffPackage()
     {
         if (!HasPackage())

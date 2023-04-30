@@ -10,7 +10,9 @@ public class Stage_04 : GameStage
     public Inventory playerInventory;
     public PackageType[] allPackageTypes;
 
+    
     public int numDeliveriesInThisStage = 0;
+    public int spawnCloudsAfterStageSuccessCount;
 
     // This stage is activated if the player successfully completes a dropoff in Stage_02
     private void SuccessfulDropoffCountChanged(AreaOfInterest arg0, int successCount)
@@ -46,6 +48,8 @@ public class Stage_04 : GameStage
     {
         return allPackageTypes[Random.Range (0, allPackageTypes.Length)];
     }
+    
+    
 
     public override void OnStageEnter()
     {
@@ -98,6 +102,9 @@ public class Stage_04 : GameStage
         var packageType = GetRandomPackageType();
         gameDirector.BeginCreatingPackage(producer, packageType);
         gameDirector.SpawnDestinationIfPossible(packageType);
+
+        if (numDeliveriesInThisStage >= spawnCloudsAfterStageSuccessCount)
+            gameDirector.SpawnCloud();
     }
 
     private void KeepSpawningDestinations(PackageType packageType)
