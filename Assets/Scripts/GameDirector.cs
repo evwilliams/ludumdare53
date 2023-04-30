@@ -7,6 +7,7 @@ using Random = UnityEngine.Random;
 public class GameDirector : MonoBehaviour
 {
     public const int DestinationCountdownTime = 9;
+    public const int PackageCreationTime = 6;
     public const int StartingRating = 4;
     
     public Inventory playerInventory;
@@ -83,14 +84,16 @@ public class GameDirector : MonoBehaviour
         currentStage.OnStageEnter();
     }
 
-    public AreaOfInterest SpawnDestination(int spawnNumber)
+    public AreaOfInterest SpawnDestination(int spawnNumber, PackageType packageType)
     {
-        return SpawnDestination(destinationLocations[spawnNumber]);
+        return SpawnDestination(destinationLocations[spawnNumber], packageType);
     }
     
-    public AreaOfInterest SpawnDestination(Transform spawnLocation)
+    public AreaOfInterest SpawnDestination(Transform spawnLocation, PackageType packageType)
     {
         var destination = Instantiate(destinationPrefab, spawnLocation.position, Quaternion.identity);
+        destination.SetPackageType(packageType);
+        destination.spriteRenderer.sprite = packageType.destinationSprite;
         destinations.Add(destination);
         return destination;
     }
@@ -98,6 +101,23 @@ public class GameDirector : MonoBehaviour
     public AreaOfInterest GetDestination(int index)
     {
         return destinations[index];
+    }
+
+    public void InstantlyCreatePackage(int sourceIndex, PackageType packageType)
+    {
+        var source = sources[sourceIndex];
+        source.SetPackageType(packageType);
+        source.spriteRenderer.color = packageType.color;
+        source.gameObject.SetActive(true);
+    }
+
+    public void BeginCreatingPackage(int sourceIndex, PackageType packageType)
+    {
+        var source = sources[sourceIndex];
+        source.SetPackageType(packageType);
+        source.spriteRenderer.color = packageType.color;
+        source.gameObject.SetActive(true);
+        source.StartTimer(PackageCreationTime);
     }
     
     public AreaOfInterest GetSource(int index)

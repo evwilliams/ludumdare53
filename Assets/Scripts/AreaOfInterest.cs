@@ -20,8 +20,6 @@ public class AreaOfInterest : MonoBehaviour
     public void SetPackageType(PackageType pType)
     {
         _packageType = pType;
-        // spriteRenderer.color = pType.color;
-        spriteRenderer.sprite = pType.sprite;
     }
 
     public void DropoffSucceeded(int rating)

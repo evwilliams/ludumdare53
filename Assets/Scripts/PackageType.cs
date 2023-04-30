@@ -1,8 +1,11 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [CreateAssetMenu]
 public class PackageType : ScriptableObject
 {
     public Color color;
-    public Sprite sprite;
+    
+    [FormerlySerializedAs("sprite")] 
+    public Sprite destinationSprite;
 }
