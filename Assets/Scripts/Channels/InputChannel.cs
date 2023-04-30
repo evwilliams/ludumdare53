@@ -7,5 +7,6 @@ using UnityEngine.InputSystem;
 [CreateAssetMenu(menuName = "Channels/PlayerInput")]
 public class InputChannel : ScriptableObject
 {
+    public UnityAction<InputAction.CallbackContext, Vector2> MovementStarted;
     public UnityAction<InputAction.CallbackContext, Vector2> MovementPerformed;
 }

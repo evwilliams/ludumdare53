@@ -3,31 +3,31 @@ using UnityEngine.InputSystem;
 
 public class Stage_03 : GameStage
 {
+    public InputChannel inputChannel;
     public DestinationChannel destinationChannel;
-
+    
     public Inventory playerInventory;
     public PackageType packageType1;
     public PackageType packageType2;
 
-    // This stage is activated if the player successfully completes a dropoff in Stage_02
-    private void SuccessfulDropoffCountChanged(AreaOfInterest arg0, int successCount)
-    {
-        if (canTransitionFrom.Contains(gameDirector.currentStage) && successCount > 1)
-            gameDirector.TransitionTo(this);
-    }
-
     private void OnEnable()
     {
-        destinationChannel.SuccessfulDropoff += SuccessfulDropoffCountChanged;
+        inputChannel.MovementStarted += MovementStarted;
         destinationChannel.MissedDropoff += MissedDropoff;
         destinationChannel.IncorrectDropoff += IncorrectDropoff;
     }
 
     private void OnDisable()
     {
-        destinationChannel.SuccessfulDropoff -= SuccessfulDropoffCountChanged;
+        inputChannel.MovementStarted -= MovementStarted;
         destinationChannel.MissedDropoff -= MissedDropoff;
         destinationChannel.IncorrectDropoff -= IncorrectDropoff;
+    }
+    
+    private void MovementStarted(InputAction.CallbackContext arg0, Vector2 arg1)
+    {
+        if (canTransitionFrom.Contains(gameDirector.currentStage))
+            gameDirector.TransitionTo(this);
     }
 
     public override void OnStageEnter()
@@ -51,8 +51,7 @@ public class Stage_03 : GameStage
         enabled = false;
         gameObject.SetActive(false);
     }
-    
-    
+
     /*
      * Continue spawning until the player triggers the next stage
      */

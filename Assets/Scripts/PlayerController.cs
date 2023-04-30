@@ -24,14 +24,24 @@ public class PlayerController : MonoBehaviour
 
     private void OnEnable()
     {
+        playerInput.CharacterControls.Movement.started += MovementStarted;
         playerInput.CharacterControls.Movement.performed += MovementPerformed;
         playerInput.CharacterControls.Movement.canceled += MovementCanceled;
     }
 
     private void OnDisable()
     {
+        playerInput.CharacterControls.Movement.started -= MovementStarted;
         playerInput.CharacterControls.Movement.performed -= MovementPerformed;
         playerInput.CharacterControls.Movement.canceled -= MovementCanceled;
+    }
+
+    private void MovementStarted(InputAction.CallbackContext context)
+    {
+        var inputVec = context.ReadValue<Vector2>();
+        moveInput = new Vector3(inputVec.x, 0, inputVec.y);
+        
+        inputChannel.MovementStarted?.Invoke(context, moveInput);
     }
 
     private void MovementCanceled(InputAction.CallbackContext obj)
