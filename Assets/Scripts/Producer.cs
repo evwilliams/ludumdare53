@@ -1,11 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class Producer : AreaOfInterest
 {
+    public ProducerChannel outputChannel;
+    
     public Animator bodyAnimator;
     public Slider timerUI;
     public Image timerFill;
@@ -56,6 +55,7 @@ public class Producer : AreaOfInterest
         _packageReady = false;
         bubbleText.text = "Baby Making";
         bodyAnimator.SetBool(IsProducing, true);
+        outputChannel.ProducerStarted?.Invoke(this);
     }
 
     void OnPackageReady(bool updateLabel = true)
@@ -65,6 +65,12 @@ public class Producer : AreaOfInterest
             bubbleText.text = "Baby Ready!";
         bodyAnimator.SetBool(IsProducing, false);
         timerUI.enabled = false;
+        outputChannel.ProducerCompleted?.Invoke(this);
+    }
+
+    public override AOIChannel GetOutputChannel()
+    {
+        return outputChannel;
     }
 
     protected override void OnTimerDone()
@@ -77,5 +83,6 @@ public class Producer : AreaOfInterest
     {
         _packageReady = false;
         bubbleText.text = "Baby Printer";
+        outputChannel.ProducerBecameAvailable?.Invoke(this);
     }
 }

@@ -1,9 +1,8 @@
 using TMPro;
 using UnityEngine;
 
-public class AreaOfInterest : MonoBehaviour
+public abstract class AreaOfInterest : MonoBehaviour
 {
-    public AOIChannel outputChannel;
     public SpriteRenderer spriteRenderer;
     public TextMeshProUGUI bubbleText;
 
@@ -32,9 +31,11 @@ public class AreaOfInterest : MonoBehaviour
 
     public void CancelTimer() => _timer.Cancel();
 
+    public abstract AOIChannel GetOutputChannel();
+
     protected virtual void OnTimerDone()
     {
-        outputChannel.TimerExpired?.Invoke(this);
+        GetOutputChannel().TimerExpired?.Invoke(this);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -42,7 +43,7 @@ public class AreaOfInterest : MonoBehaviour
         if (_pendingDestroy)
             return;
         
-        outputChannel.Entered?.Invoke(this);
+        GetOutputChannel().Entered?.Invoke(this);
     }
 
     private void OnTriggerExit(Collider other)
@@ -50,6 +51,6 @@ public class AreaOfInterest : MonoBehaviour
         if (_pendingDestroy)
             return;
         
-        outputChannel.Exited?.Invoke(this);
+        GetOutputChannel().Exited?.Invoke(this);
     }
 }

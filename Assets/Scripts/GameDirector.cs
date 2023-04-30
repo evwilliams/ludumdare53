@@ -137,12 +137,12 @@ public class GameDirector : MonoBehaviour
     }
 
     [CanBeNull]
-    public Destination SpawnDestinationWherePossible(PackageType packageType, bool andStartTimer = true)
+    public Destination SpawnDestinationIfPossible(PackageType packageType, bool andStartTimer = true)
     {
         var availableSpawn = GetAvailableSpawn();
         if (availableSpawn == null)
         {
-            Debug.LogError("Unable to find available spawn");
+            Debug.Log("Unable to find available spawn");
             return null;
         }
         
@@ -184,8 +184,12 @@ public class GameDirector : MonoBehaviour
 
     public void BeginCreatingPackage(int sourceIndex, PackageType packageType)
     {
-        var source = GetSource(sourceIndex);
-        source.BeginCreatingPackage(packageType, PackageCreationTime);
+        BeginCreatingPackage(GetSource(sourceIndex), packageType);
+    }
+
+    public void BeginCreatingPackage(Producer producer, PackageType packageType)
+    {
+        producer.BeginCreatingPackage(packageType, PackageCreationTime);
     }
     
     public Producer GetSource(int index)

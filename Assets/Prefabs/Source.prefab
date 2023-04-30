@@ -480,7 +480,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d30900e0a69434b9781ace626c2b0a6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  outputChannel: {fileID: 11400000, guid: 64fde075d58e24a2b91f3ffd05619eca, type: 2}
+  outputChannel: {fileID: 11400000, guid: 2fe73c6c067c54104a97b4624afd2c17, type: 2}
   spriteRenderer: {fileID: 8843357101818615448}
   bubbleText: {fileID: 3509250975311349425}
   _timer: {fileID: 484029092621614694}

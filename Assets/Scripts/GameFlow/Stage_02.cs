@@ -36,7 +36,7 @@ public class Stage_02 : GameStage
     public override void OnStageEnter()
     {
         Debug.Log($"Entering {name}");
-        gameDirector.SpawnDestinationWherePossible(secondPackageType);
+        gameDirector.SpawnDestinationIfPossible(secondPackageType);
         gameDirector.BeginCreatingPackage(0, _firstPackageType);
         gameDirector.BeginCreatingPackage(1, secondPackageType);
     }
@@ -66,6 +66,6 @@ public class Stage_02 : GameStage
 
     private void KeepSpawningDestinations(PackageType missedType)
     {
-        gameDirector.SpawnDestinationWherePossible(missedType);
+        gameDirector.SpawnDestinationIfPossible(missedType);
     }
 }

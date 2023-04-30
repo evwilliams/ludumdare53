@@ -41,7 +41,7 @@ public class Stage_03 : GameStage
 
     private void SetupSourceAndDestination(PackageType packageType)
     {
-        gameDirector.SpawnDestinationWherePossible(packageType);
+        gameDirector.SpawnDestinationIfPossible(packageType);
         gameDirector.BeginCreatingPackage(packageType == packageType1 ? 0 : 1, packageType);
     }
 

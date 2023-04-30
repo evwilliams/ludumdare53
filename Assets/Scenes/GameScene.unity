@@ -724,7 +724,7 @@ MonoBehaviour:
   - {fileID: 1191695352}
   - {fileID: 533666689}
   - {fileID: 1605071191}
-  pickupChannel: {fileID: 11400000, guid: 64fde075d58e24a2b91f3ffd05619eca, type: 2}
+  pickupChannel: {fileID: 11400000, guid: 2fe73c6c067c54104a97b4624afd2c17, type: 2}
   destinationChannel: {fileID: 11400000, guid: a4630b9d6bcf0434ba922a88335acf1a, type: 2}
   packagePrefab: {fileID: 1293086306, guid: 2eb6f487d918c47c393fe14b44828264, type: 3}
   startingStage: {fileID: 11188964}
@@ -1724,6 +1724,7 @@ MonoBehaviour:
   canTransitionFrom:
   - {fileID: 850225927}
   destinationChannel: {fileID: 11400000, guid: a4630b9d6bcf0434ba922a88335acf1a, type: 2}
+  producerChannel: {fileID: 11400000, guid: 2fe73c6c067c54104a97b4624afd2c17, type: 2}
   successesToTransition: 4
   playerInventory: {fileID: 1231731198}
   allPackageTypes:
@@ -2511,7 +2512,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioPlayer: {fileID: 2084196645}
   sound_SuccessfulPickup: {fileID: 8300000, guid: c287cb27cb2f5421696e5889f01c2c09, type: 3}
-  sound_MissedPickup: {fileID: 8300000, guid: 171a746f65dd446e4a9c03d9f2379d62, type: 3}
+  sound_MissedPickup: {fileID: 8300000, guid: a1026af983104484bb099bec8d742419, type: 3}
   sound_IncorrectPickup: {fileID: 8300000, guid: a1026af983104484bb099bec8d742419, type: 3}
   destinationChannel: {fileID: 11400000, guid: a4630b9d6bcf0434ba922a88335acf1a, type: 2}
 --- !u!82 &2084196645

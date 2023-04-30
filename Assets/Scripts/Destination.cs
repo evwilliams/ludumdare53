@@ -2,6 +2,8 @@ using System;
 
 public class Destination : AreaOfInterest
 {
+    public DestinationChannel outputChannel;
+    
     public void DropoffSucceeded(int rating)
     {
         _pendingDestroy = true;
@@ -26,5 +28,10 @@ public class Destination : AreaOfInterest
     private String StarTextForRating(int rating)
     {
         return rating == 1 ? "star" : "stars";
+    }
+
+    public override AOIChannel GetOutputChannel()
+    {
+        return outputChannel;
     }
 }

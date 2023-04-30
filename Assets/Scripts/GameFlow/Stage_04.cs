@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 public class Stage_04 : GameStage
 {
     public DestinationChannel destinationChannel;
+    public ProducerChannel producerChannel;
     public int successesToTransition;
     public Inventory playerInventory;
     public PackageType[] allPackageTypes;
@@ -13,6 +14,10 @@ public class Stage_04 : GameStage
     {
         if (canTransitionFrom.Contains(gameDirector.currentStage) && successCount >= successesToTransition)
             gameDirector.TransitionTo(this);
+        else if (gameDirector.currentStage == this)
+        {
+            KeepSpawningDestinations(GetRandomPackageType());
+        }
     }
 
     private void OnEnable()
@@ -20,6 +25,8 @@ public class Stage_04 : GameStage
         destinationChannel.SuccessfulDropoff += SuccessfulDropoffCountChanged;
         destinationChannel.MissedDropoff += MissedDropoff;
         destinationChannel.IncorrectDropoff += IncorrectDropoff;
+        
+        producerChannel.ProducerBecameAvailable += ProducerBecameAvailable;
     }
 
     private void OnDisable()
@@ -27,6 +34,8 @@ public class Stage_04 : GameStage
         destinationChannel.SuccessfulDropoff -= SuccessfulDropoffCountChanged;
         destinationChannel.MissedDropoff -= MissedDropoff;
         destinationChannel.IncorrectDropoff -= IncorrectDropoff;
+        
+        producerChannel.ProducerBecameAvailable -= ProducerBecameAvailable;
     }
     
     PackageType GetRandomPackageType()
@@ -45,7 +54,7 @@ public class Stage_04 : GameStage
 
     private void SetupSourceAndDestination(int sourceIndex, PackageType packageType)
     {
-        gameDirector.SpawnDestinationWherePossible(packageType);
+        gameDirector.SpawnDestinationIfPossible(packageType);
         gameDirector.BeginCreatingPackage(sourceIndex, packageType);
     }
 
@@ -55,8 +64,7 @@ public class Stage_04 : GameStage
         enabled = false;
         gameObject.SetActive(false);
     }
-    
-    
+
     /*
      * Continue spawning until the player triggers the next stage
      */
@@ -71,9 +79,19 @@ public class Stage_04 : GameStage
         if (gameDirector.currentStage == this)
             KeepSpawningDestinations(destination.PackageType);
     }
-
-    private void KeepSpawningDestinations(PackageType missedType)
+    
+    private void ProducerBecameAvailable(Producer producer)
     {
-        SetupSourceAndDestination(0, missedType);
+        if (gameDirector.currentStage != this)
+            return;
+        
+        var packageType = GetRandomPackageType();
+        gameDirector.BeginCreatingPackage(producer, packageType);
+        gameDirector.SpawnDestinationIfPossible(packageType);
+    }
+
+    private void KeepSpawningDestinations(PackageType packageType)
+    {
+        gameDirector.SpawnDestinationIfPossible(packageType);
     }
 }

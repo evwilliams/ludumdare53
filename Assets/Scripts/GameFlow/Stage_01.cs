@@ -50,6 +50,6 @@ public class Stage_01 : GameStage
     private void KeepSpawningDestinations()
     {
         Debug.Log($"{name} spawning of type {startingPackageType}");
-        gameDirector.SpawnDestinationWherePossible(startingPackageType);
+        gameDirector.SpawnDestinationIfPossible(startingPackageType);
     }
 }
