@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameDirector : MonoBehaviour
 {
@@ -298,5 +299,10 @@ public class GameDirector : MonoBehaviour
     {
         _incorrectDropoffs++;
         destinationChannel.IncorrectDropoff?.Invoke(destination, _incorrectDropoffs);
+    }
+
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

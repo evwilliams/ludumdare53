@@ -12,7 +12,7 @@ public class Stage_03 : GameStage
     // This stage is activated if the player successfully completes a dropoff in Stage_02
     private void SuccessfulDropoffCountChanged(AreaOfInterest arg0, int successCount)
     {
-        if (canTransitionFrom.Contains(gameDirector.currentStage) && successCount > 0)
+        if (canTransitionFrom.Contains(gameDirector.currentStage) && successCount > 1)
             gameDirector.TransitionTo(this);
     }
 

@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Random = UnityEngine.Random;
@@ -9,6 +10,10 @@ public class ScoreScreenStage : GameStage
     public int endGameAfterNumDeliveriesInStage04;
     
     public GameObject scorePanelRoot;
+    public TextMeshProUGUI scoreText_storkRating;
+    public TextMeshProUGUI scoreText_successfulDeliveries;
+    public TextMeshProUGUI scoreText_incorrectDeliveries;
+    public TextMeshProUGUI scoreText_missedDeliveries;
 
     // TODO - Make this way of checking transitions not suck
     private void Update()
@@ -20,9 +25,19 @@ public class ScoreScreenStage : GameStage
         }
     }
 
+    void UpdateScores()
+    {
+        scoreText_storkRating.text = gameDirector.StarRating.ToString("0.00");
+        scoreText_successfulDeliveries.text = gameDirector.SuccessfulDropoffs.ToString();
+        scoreText_incorrectDeliveries.text = gameDirector.IncorrectDropoffs.ToString();
+        scoreText_missedDeliveries.text = gameDirector.MissedDropoffs.ToString();
+        
+    }
+
     public override void OnStageEnter()
     {
         Debug.Log($"Entering {name}");
+        UpdateScores();
         scorePanelRoot.SetActive(true);
     }
 

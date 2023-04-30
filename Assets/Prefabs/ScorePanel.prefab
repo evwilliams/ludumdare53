@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 121917689092556437}
   - component: {fileID: 121917689092556436}
   m_Layer: 5
-  m_Name: RatingRow (3)
+  m_Name: Row_Misses
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,7 +32,7 @@ RectTransform:
   - {fileID: 121917689344305895}
   - {fileID: 121917690650029570}
   m_Father: {fileID: 121917690309297667}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -131,7 +131,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Stork Rating:'
+  m_text: 'Families who got someone else''s baby:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -401,7 +401,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Stork Rating:'
+  m_text: 'Families who went with another stork:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -736,7 +736,7 @@ GameObject:
   - component: {fileID: 121917689833580203}
   - component: {fileID: 121917689833580202}
   m_Layer: 5
-  m_Name: RatingRow (1)
+  m_Name: Row_Successes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -802,7 +802,7 @@ GameObject:
   - component: {fileID: 121917689846818821}
   - component: {fileID: 121917689846818822}
   m_Layer: 5
-  m_Name: Value
+  m_Name: Value_StorkRating
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -856,7 +856,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 4.84
+  m_text: 9.99
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -937,7 +937,7 @@ GameObject:
   - component: {fileID: 121917689926115396}
   - component: {fileID: 121917689926115397}
   m_Layer: 5
-  m_Name: Value
+  m_Name: Value_Successes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -991,7 +991,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 4.84
+  m_text: 99
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1071,7 +1071,7 @@ GameObject:
   - component: {fileID: 121917689937842800}
   - component: {fileID: 121917689937842807}
   m_Layer: 5
-  m_Name: RatingRow (2)
+  m_Name: Row_Incorrect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1092,7 +1092,7 @@ RectTransform:
   - {fileID: 121917689317874698}
   - {fileID: 121917690337559094}
   m_Father: {fileID: 121917690309297667}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1191,7 +1191,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Stork Rating:'
+  m_text: 'Successful Deliveries:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1328,8 +1328,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Thanks for Playing!
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 74315d258abea46859c1fa5c3d41265a, type: 2}
+  m_sharedMaterial: {fileID: -401189801753046596, guid: 74315d258abea46859c1fa5c3d41265a, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1359,7 +1359,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -1430,8 +1430,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -10.8726, y: 65.760956}
-  m_SizeDelta: {x: 280, y: 228}
+  m_AnchoredPosition: {x: 10.2721, y: 42.757324}
+  m_SizeDelta: {x: 412, y: 274}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &121917690045456850
 GameObject:
@@ -1523,8 +1523,8 @@ RectTransform:
   - {fileID: 121917689704033745}
   - {fileID: 121917690740988793}
   - {fileID: 121917689833580203}
-  - {fileID: 121917689937842800}
   - {fileID: 121917689092556437}
+  - {fileID: 121917689937842800}
   - {fileID: 121917690045456849}
   - {fileID: 121917691001795285}
   m_Father: {fileID: 121917689989828132}
@@ -1573,7 +1573,7 @@ GameObject:
   - component: {fileID: 121917690337559092}
   - component: {fileID: 121917690337559093}
   m_Layer: 5
-  m_Name: Value
+  m_Name: Value_Incorrect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1627,7 +1627,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 4.84
+  m_text: 99
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1708,7 +1708,7 @@ GameObject:
   - component: {fileID: 121917690650029568}
   - component: {fileID: 121917690650029569}
   m_Layer: 5
-  m_Name: Value
+  m_Name: Value_Misses
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1762,7 +1762,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 4.84
+  m_text: 99
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
