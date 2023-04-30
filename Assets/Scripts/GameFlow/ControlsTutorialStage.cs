@@ -19,5 +19,7 @@ public class ControlsTutorialStage : GameStage
     {
         // Debug.Log($"Exiting {name}");
         tutorialPanelRoot.SetActive(false);
+        enabled = false;
+        gameObject.SetActive(false);
     }
 }

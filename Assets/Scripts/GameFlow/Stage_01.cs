@@ -38,6 +38,7 @@ public class Stage_01 : GameStage
     {
         Debug.Log($"Exiting {name}");
         enabled = false;
+        gameObject.SetActive(false);
     }
     
     private void MissedDropoff(int arg0)

@@ -7,6 +7,8 @@ public class AreaOfInterest : MonoBehaviour
     public AOIChannel outputChannel;
     public SpriteRenderer spriteRenderer;
     public TextMeshProUGUI bubbleText;
+
+    private bool _pendingDestroy = false;
     
     [SerializeField]
     private Timer _timer;
@@ -24,18 +26,21 @@ public class AreaOfInterest : MonoBehaviour
 
     public void DropoffSucceeded(int rating)
     {
+        _pendingDestroy = true;
         bubbleText.text = $"Rated {rating} {StarTextForRating(rating)}!";
         Destroy(gameObject, 2);
     }
     
     public void DropoffMismatch(int rating)
     {
+        _pendingDestroy = true;
         bubbleText.text = $"That's not my baby! {rating} {StarTextForRating(rating)}!";
         Destroy(gameObject, 2);
     }
     
     public void DropoffMissed(int rating)
     {
+        _pendingDestroy = true;
         bubbleText.text = $"I'm taking my stork business elsewhere! {rating} {StarTextForRating(rating)}!";
         Destroy(gameObject, 2);
     }
@@ -61,11 +66,17 @@ public class AreaOfInterest : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (_pendingDestroy)
+            return;
+        
         outputChannel.Entered?.Invoke(this);
     }
 
     private void OnTriggerExit(Collider other)
     {
+        if (_pendingDestroy)
+            return;
+        
         outputChannel.Exited?.Invoke(this);
     }
 }

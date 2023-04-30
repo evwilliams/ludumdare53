@@ -40,6 +40,7 @@ public class Stage_02 : GameStage
     {
         Debug.Log($"Exiting {name}");
         enabled = false;
+        gameObject.SetActive(false);
     }
     
     
