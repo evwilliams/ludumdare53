@@ -15,9 +15,9 @@ public class GameDirector : MonoBehaviour
     
     public Inventory playerInventory;
     public List<Producer> sources = new();
-    private List<AreaOfInterest> destinations = new();
+    private List<Destination> _destinations = new();
 
-    public AreaOfInterest destinationPrefab;
+    public Destination destinationPrefab;
     public List<SpawnPoint> destinationLocations = new();
 
     public AOIChannel pickupChannel;
@@ -60,8 +60,8 @@ public class GameDirector : MonoBehaviour
         get => _starRating;
     }
     
-    public float ratingSum = 0;
-    public int numRatingsReceived = 0;
+    private float _ratingSum = 0;
+    private int _numRatingsReceived = 0;
     public FloatChannel starRatingChannel;
     
     private void OnEnable()
@@ -79,21 +79,21 @@ public class GameDirector : MonoBehaviour
 
     private void InitRatingInfo()
     {
-        ratingSum = StartingRating;
-        numRatingsReceived = 1;
+        _ratingSum = StartingRating;
+        _numRatingsReceived = 1;
         UpdateStarRating();
     }
 
     public void RateDelivery(float rating)
     {
-        ratingSum += rating;
-        numRatingsReceived++;
+        _ratingSum += rating;
+        _numRatingsReceived++;
         UpdateStarRating();
     } 
 
     public void UpdateStarRating()
     {
-        _starRating = ratingSum / numRatingsReceived;
+        _starRating = _ratingSum / _numRatingsReceived;
         starRatingChannel.ValueChanged?.Invoke(_starRating);
     }
 
@@ -118,7 +118,7 @@ public class GameDirector : MonoBehaviour
     }
 
     [CanBeNull]
-    private SpawnPoint FindMatchingSpawnPoint(AreaOfInterest destination)
+    private SpawnPoint FindMatchingSpawnPoint(Destination destination)
     {
         foreach (var spawnPoint in destinationLocations)
         {
@@ -132,7 +132,7 @@ public class GameDirector : MonoBehaviour
     }
 
     [CanBeNull]
-    public AreaOfInterest SpawnDestinationWherePossible(PackageType packageType, bool andStartTimer = true)
+    public Destination SpawnDestinationWherePossible(PackageType packageType, bool andStartTimer = true)
     {
         var availableSpawn = GetAvailableSpawn();
         if (availableSpawn == null)
@@ -147,7 +147,7 @@ public class GameDirector : MonoBehaviour
         return destination;
     }
     
-    public AreaOfInterest SpawnDestination(int spawnNumber, PackageType packageType, bool andStartTimer = true)
+    public Destination SpawnDestination(int spawnNumber, PackageType packageType, bool andStartTimer = true)
     {
         var destination = SpawnDestination(destinationLocations[spawnNumber], packageType);
         if (andStartTimer)
@@ -155,20 +155,20 @@ public class GameDirector : MonoBehaviour
         return destination;
     }
     
-    private AreaOfInterest SpawnDestination(SpawnPoint spawnPoint, PackageType packageType)
+    private Destination SpawnDestination(SpawnPoint spawnPoint, PackageType packageType)
     {
         
         var destination = Instantiate(destinationPrefab, spawnPoint.transform.position, Quaternion.identity);
         destination.SetPackageType(packageType);
         destination.spriteRenderer.sprite = packageType.destinationSprite;
         spawnPoint.areaOfInterest = destination;
-        destinations.Add(destination);
+        _destinations.Add(destination);
         return destination;
     }
 
-    public AreaOfInterest GetDestination(int index)
+    public Destination GetDestination(int index)
     {
-        return destinations[index];
+        return _destinations[index];
     }
 
     public void InstantlyCreatePackage(int sourceIndex, PackageType packageType)
@@ -233,29 +233,32 @@ public class GameDirector : MonoBehaviour
         if (!playerInventory.HasPackage())
             return;
 
-        area.CancelTimer();
+        var destination = area as Destination;
+
+        destination.CancelTimer();
         var pack = playerInventory.GetPackage(0);
-        bool packageTypeMatches = pack.PackageType == area.PackageType;
-        int rating = GetDeliveryRating(packageTypeMatches, area.TimeRemainingRatio);
+        bool packageTypeMatches = pack.PackageType == destination.PackageType;
+        int rating = GetDeliveryRating(packageTypeMatches, destination.TimeRemainingRatio);
         RateDelivery(rating);
         
         if (packageTypeMatches)
         {
-            area.DropoffSucceeded(rating);
+            destination.DropoffSucceeded(rating);
             IncrementSuccessfulDropoffs();
         }
         else
         {
-            area.DropoffMismatch(rating);
+            destination.DropoffMismatch(rating);
             IncrementIncorrectDropoffs();
         }
         playerInventory.DropoffPackage();
-        FindMatchingSpawnPoint(area)?.SetAreaOfInterest(null);
+        FindMatchingSpawnPoint(destination)?.SetAreaOfInterest(null);
     }
     
-    private void DropoffTimerExpired(AreaOfInterest destination)
+    private void DropoffTimerExpired(AreaOfInterest area)
     {
-        Debug.Log($"{destination.name}'s timer expired");
+        Debug.Log($"{area.name}'s timer expired");
+        var destination = area as Destination;
 
         var rating = RatingForTimingMiss;
         RateDelivery(rating);

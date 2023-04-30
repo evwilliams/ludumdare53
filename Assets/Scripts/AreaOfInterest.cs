@@ -1,4 +1,3 @@
-using System;
 using TMPro;
 using UnityEngine;
 
@@ -8,7 +7,7 @@ public class AreaOfInterest : MonoBehaviour
     public SpriteRenderer spriteRenderer;
     public TextMeshProUGUI bubbleText;
 
-    private bool _pendingDestroy = false;
+    protected bool _pendingDestroy = false;
     
     [SerializeField]
     private Timer _timer;
@@ -23,33 +22,7 @@ public class AreaOfInterest : MonoBehaviour
     {
         _packageType = pType;
     }
-
-    public void DropoffSucceeded(int rating)
-    {
-        _pendingDestroy = true;
-        bubbleText.text = $"Rated {rating} {StarTextForRating(rating)}!";
-        Destroy(gameObject, 2);
-    }
     
-    public void DropoffMismatch(int rating)
-    {
-        _pendingDestroy = true;
-        bubbleText.text = $"That's not my baby! {rating} {StarTextForRating(rating)}!";
-        Destroy(gameObject, 2);
-    }
-    
-    public void DropoffMissed(int rating)
-    {
-        _pendingDestroy = true;
-        bubbleText.text = $"I'm taking my stork business elsewhere! {rating} {StarTextForRating(rating)}!";
-        Destroy(gameObject, 2);
-    }
-
-    private String StarTextForRating(int rating)
-    {
-        return rating == 1 ? "star" : "stars";
-    }
-
     public void StartTimer(float seconds)
     {
         _timer.StartTimer(seconds, OnTimerDone);
