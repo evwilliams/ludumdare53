@@ -1,10 +1,12 @@
 using System;
+using TMPro;
 using UnityEngine;
 
 public class AreaOfInterest : MonoBehaviour
 {
     public AOIChannel outputChannel;
     public SpriteRenderer spriteRenderer;
+    public TextMeshProUGUI bubbleText;
     
     [SerializeField]
     private Timer _timer;
@@ -22,10 +24,18 @@ public class AreaOfInterest : MonoBehaviour
         spriteRenderer.sprite = pType.sprite;
     }
 
+    public void DropoffSucceeded(int rating)
+    {
+        bubbleText.text = $"Rated {rating} stars!";
+        Destroy(gameObject, 2);
+    }
+
     public void StartTimer(float seconds)
     {
         _timer.StartTimer(seconds, OnTimerDone);
     }
+
+    public float TimeRemainingRatio => _timer.GetRemainingRatio();
 
     public void CancelTimer() => _timer.Cancel();
 

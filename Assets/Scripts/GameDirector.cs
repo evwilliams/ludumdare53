@@ -135,6 +135,16 @@ public class GameDirector : MonoBehaviour
         playerInventory.TryPickup(package);
     }
 
+    private int GetDeliveryRating(bool packageTypesMatch, float timeRemainingRatio)
+    {
+        if (!packageTypesMatch)
+            return 0;
+
+        const float baselineScore = 1;
+        const float maxScore = 5;
+        return (int)(maxScore * timeRemainingRatio + baselineScore);
+    }
+
     private void DropoffEntered(AreaOfInterest area)
     {
         if (!playerInventory.HasPackage())
@@ -146,7 +156,10 @@ public class GameDirector : MonoBehaviour
         {
             area.CancelTimer();
             playerInventory.TryDropoff();
-            RateDelivery(5);
+
+            int rating = GetDeliveryRating(true, area.TimeRemainingRatio);
+            RateDelivery(rating);
+            area.DropoffSucceeded(rating);
         }
     }
 }

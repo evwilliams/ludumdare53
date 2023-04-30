@@ -753,6 +753,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   outputChannel: {fileID: 11400000, guid: a4630b9d6bcf0434ba922a88335acf1a, type: 2}
   spriteRenderer: {fileID: 5530714655840920446}
+  bubbleText: {fileID: 7106855439962327353}
   _timer: {fileID: 6252062933769769507}
 --- !u!114 &6252062933769769507
 MonoBehaviour:
@@ -770,6 +771,7 @@ MonoBehaviour:
   startTime: 0
   doneTime: 0
   isDone: 0
+  isCanceled: 0
 --- !u!114 &8189377446358144459
 MonoBehaviour:
   m_ObjectHideFlags: 0
