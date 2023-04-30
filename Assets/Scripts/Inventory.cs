@@ -43,7 +43,7 @@ public class Inventory : MonoBehaviour
             return;
 
         var packageToDropoff = GetPackageForDropoff();
-        Debug.Log($"Dropping of package type: {packageToDropoff.PackageType}");
+        // Debug.Log($"Dropping of package type: {packageToDropoff.PackageType}");
         packages.Remove(packageToDropoff);
         Destroy(packageToDropoff.gameObject);
     }

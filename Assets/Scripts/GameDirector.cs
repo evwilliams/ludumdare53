@@ -1,9 +1,6 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public class GameDirector : MonoBehaviour
 {
@@ -24,8 +21,6 @@ public class GameDirector : MonoBehaviour
     public DestinationChannel destinationChannel;
 
     public Package packagePrefab;
-
-    public PackageType[] packageTypes;
 
     public GameStage startingStage;
     public GameStage currentStage;
@@ -204,10 +199,7 @@ public class GameDirector : MonoBehaviour
     //     area.StartTimer(DestinationCountdownTime);
     // }
 
-    PackageType GetRandomPackageType()
-    {
-        return packageTypes[Random.Range (0, packageTypes.Length)];
-    }
+    
 
     private void OnDisable()
     {
