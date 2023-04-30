@@ -14,15 +14,31 @@ public class ScoreScreenStage : GameStage
     public TextMeshProUGUI scoreText_successfulDeliveries;
     public TextMeshProUGUI scoreText_incorrectDeliveries;
     public TextMeshProUGUI scoreText_missedDeliveries;
+    
+    // So hacky
+    public GameObject remainingDeliveriesUIContainer;
+    public TextMeshProUGUI remainingDeliveriesCounterText;
 
     // TODO - Make this way of checking transitions not suck
     private void Update()
     {
-        if (gameDirector.currentStage == stage04 &&
-            stage04.numDeliveriesInThisStage >= endGameAfterNumDeliveriesInStage04)
+        if (gameDirector.currentStage == stage04)
         {
-            gameDirector.TransitionTo(this);
+            UpdateDeliveryCountdown();
+            
+            if(stage04.numDeliveriesInThisStage >= endGameAfterNumDeliveriesInStage04)
+            {
+                gameDirector.TransitionTo(this);
+            }
         }
+            
+    }
+
+    void UpdateDeliveryCountdown()
+    {
+        remainingDeliveriesUIContainer.SetActive(true);
+        remainingDeliveriesCounterText.text =
+            $"{stage04.numDeliveriesInThisStage}/{endGameAfterNumDeliveriesInStage04}";
     }
 
     void UpdateScores()
@@ -31,12 +47,12 @@ public class ScoreScreenStage : GameStage
         scoreText_successfulDeliveries.text = gameDirector.SuccessfulDropoffs.ToString();
         scoreText_incorrectDeliveries.text = gameDirector.IncorrectDropoffs.ToString();
         scoreText_missedDeliveries.text = gameDirector.MissedDropoffs.ToString();
-        
     }
 
     public override void OnStageEnter()
     {
         Debug.Log($"Entering {name}");
+        remainingDeliveriesUIContainer.SetActive(false);
         UpdateScores();
         scorePanelRoot.SetActive(true);
     }

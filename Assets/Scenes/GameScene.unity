@@ -489,6 +489,8 @@ MonoBehaviour:
   scoreText_successfulDeliveries: {fileID: 620778486}
   scoreText_incorrectDeliveries: {fileID: 1116320134}
   scoreText_missedDeliveries: {fileID: 1910922674}
+  remainingDeliveriesUIContainer: {fileID: 3117935410210114538}
+  remainingDeliveriesCounterText: {fileID: 3117935410210114537}
 --- !u!1 &323202730
 GameObject:
   m_ObjectHideFlags: 0
@@ -2788,6 +2790,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e575bd1dd0b34414f951d8aef83bc51f, type: 3}
+--- !u!114 &3117935410210114537 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6845587589855541273, guid: e575bd1dd0b34414f951d8aef83bc51f, type: 3}
+  m_PrefabInstance: {fileID: 3117935410210114536}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &3117935410210114538 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1900607590000727602, guid: e575bd1dd0b34414f951d8aef83bc51f, type: 3}
+  m_PrefabInstance: {fileID: 3117935410210114536}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3406465685452128810 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 549093526445877110, guid: 19f55f40b270e4b028c63d2e8ec8f4a5, type: 3}
