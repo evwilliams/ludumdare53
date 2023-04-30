@@ -7,6 +7,8 @@ public class ScoreScreenStage : GameStage
 {
     public Stage_04 stage04;
     public int endGameAfterNumDeliveriesInStage04;
+    
+    public GameObject scorePanelRoot;
 
     // TODO - Make this way of checking transitions not suck
     private void Update()
@@ -21,6 +23,7 @@ public class ScoreScreenStage : GameStage
     public override void OnStageEnter()
     {
         Debug.Log($"Entering {name}");
+        scorePanelRoot.SetActive(true);
     }
 
     public override void OnStageExit()
