@@ -7,6 +7,7 @@ public class Timer : MonoBehaviour
     public float startTime;
     public float doneTime;
     public bool isDone = true;
+    public bool isCanceled = false;
     private Action _onTimerDone;
     
     public void StartTimer(float seconds, Action onTimerDone)
@@ -15,19 +16,26 @@ public class Timer : MonoBehaviour
         startTime = Time.time;
         doneTime = startTime + duration;
         isDone = false;
+        isCanceled = false;
         _onTimerDone = onTimerDone;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (isDone) 
+        if (isDone || isCanceled) 
             return;
 
         if (Time.time >= doneTime)
         {
             TimerComplete();
         }
+    }
+
+    public void Cancel()
+    {
+        isCanceled = true;
+        _onTimerDone = null;
     }
 
     public float GetTimeElapsed()

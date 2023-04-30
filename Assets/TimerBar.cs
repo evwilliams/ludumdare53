@@ -8,9 +8,13 @@ public class TimerBar : MonoBehaviour
 
     private void Update()
     {
-        slider.enabled = !timer.isDone;
-        if (!timer.isDone)
+        if (timer.isDone || timer.isCanceled)
         {
+            slider.gameObject.SetActive(false);
+        }
+        else
+        {
+            slider.gameObject.SetActive(true);
             slider.value = timer.GetRemainingRatio() * slider.maxValue;
         }
     }

@@ -27,6 +27,8 @@ public class AreaOfInterest : MonoBehaviour
         _timer.StartTimer(seconds, OnTimerDone);
     }
 
+    public void CancelTimer() => _timer.Cancel();
+
     private void OnTimerDone()
     {
         outputChannel.TimerExpired?.Invoke(this);

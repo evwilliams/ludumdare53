@@ -144,6 +144,7 @@ public class GameDirector : MonoBehaviour
         var pack = playerInventory.GetPackage(0);
         if (pack.PackageType == area.PackageType)
         {
+            area.CancelTimer();
             playerInventory.TryDropoff();
             RateDelivery(5);
         }
