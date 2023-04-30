@@ -32,7 +32,7 @@ public class Stage_02 : GameStage
     public override void OnStageEnter()
     {
         Debug.Log($"Entering {name}");
-        gameDirector.SpawnDestination(1, secondPackageType);
+        gameDirector.SpawnDestinationWherePossible(secondPackageType);
         gameDirector.InstantlyCreatePackage(1, secondPackageType);
     }
 
@@ -48,12 +48,14 @@ public class Stage_02 : GameStage
      */
     private void IncorrectDropoff(int arg0)
     {
-        KeepSpawningDestinations();
+        if (gameDirector.currentStage == this)
+            KeepSpawningDestinations();
     }
 
     private void MissedDropoff(int arg0)
     {
-        KeepSpawningDestinations();
+        if (gameDirector.currentStage == this)
+            KeepSpawningDestinations();
     }
 
     private void KeepSpawningDestinations()
