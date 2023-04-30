@@ -12,7 +12,7 @@ public class ControlsTutorialStage : GameStage
         // Debug.Log($"Entering {name}");
         tutorialPanelRoot.SetActive(true);
         gameDirector.SpawnDestination(0, firstPackageType, false);
-        gameDirector.InstantlyCreatePackage(0, firstPackageType);
+        gameDirector.InstantlyCreatePackage(0, firstPackageType, false);
     }
 
     public override void OnStageExit()

@@ -10,6 +10,7 @@ public class Producer : AreaOfInterest
     public Slider timerUI;
     public Image timerFill;
     private static readonly int IsProducing = Animator.StringToHash("isProducing");
+    private bool _packageReady = false;
 
     public override void SetPackageType(PackageType packageType)
     {
@@ -17,13 +18,17 @@ public class Producer : AreaOfInterest
         spriteRenderer.color = packageType.color;
         timerFill.color = packageType.color;
     }
-    
-    public void InstantlyCreatePackage(PackageType packageType)
+
+    public bool HasPackageReady()
+    {
+        return _packageReady;
+    }
+
+    public void InstantlyCreatePackage(PackageType packageType, bool updateLabel = true)
     {
         SetPackageType(packageType);
         gameObject.SetActive(true);
-        timerUI.enabled = false;
-        bodyAnimator.SetBool(IsProducing, false);
+        OnPackageReady(updateLabel);
     }
 
     public void BeginCreatingPackage(PackageType packageType, float creationTime)
@@ -31,14 +36,36 @@ public class Producer : AreaOfInterest
         SetPackageType(packageType);
         gameObject.SetActive(true);
         timerUI.enabled = true;
-        bodyAnimator.SetBool(IsProducing, true);
+
+        OnStartCreating();
         StartTimer(creationTime);
+    }
+
+    void OnStartCreating()
+    {
+        _packageReady = false;
+        bubbleText.text = "Baby Making";
+        bodyAnimator.SetBool(IsProducing, true);
+    }
+
+    void OnPackageReady(bool updateLabel = true)
+    {
+        _packageReady = true;
+        if (updateLabel)
+            bubbleText.text = "Baby Ready!";
+        bodyAnimator.SetBool(IsProducing, false);
+        timerUI.enabled = false;
     }
 
     protected override void OnTimerDone()
     {
-        bodyAnimator.SetBool(IsProducing, false);
-        timerUI.enabled = false;
+        OnPackageReady();
         base.OnTimerDone();
+    }
+
+    public void PickupPackage()
+    {
+        _packageReady = false;
+        bubbleText.text = "Baby Printer";
     }
 }

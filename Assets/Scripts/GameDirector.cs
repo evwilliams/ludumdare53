@@ -8,7 +8,7 @@ using Random = UnityEngine.Random;
 public class GameDirector : MonoBehaviour
 {
     public const int DestinationCountdownTime = 9;
-    public const int PackageCreationTime = 6;
+    public const int PackageCreationTime = 4;
     public const int StartingRating = 4;
 
     public const int RatingForTimingMiss = 0;
@@ -171,10 +171,10 @@ public class GameDirector : MonoBehaviour
         return _destinations[index];
     }
 
-    public void InstantlyCreatePackage(int sourceIndex, PackageType packageType)
+    public void InstantlyCreatePackage(int sourceIndex, PackageType packageType, bool updateLabel = true)
     {
         var source = GetSource(sourceIndex);
-        source.InstantlyCreatePackage(packageType);
+        source.InstantlyCreatePackage(packageType, updateLabel);
     }
 
     public void BeginCreatingPackage(int sourceIndex, PackageType packageType)
@@ -211,11 +211,16 @@ public class GameDirector : MonoBehaviour
         // Only one package for now
         if (playerInventory.HasPackage())
             return;
+
+        var producer = area as Producer;
+        if (!producer.HasPackageReady())
+            return;
         
         // Debug.Log($"Pickup entered: {area.name}");
         var package = Instantiate(packagePrefab);
         package.SetPackageType(area.PackageType);
         playerInventory.TryPickup(package);
+        producer.PickupPackage();
     }
 
     private int GetDeliveryRating(bool packageTypesMatch, float timeRemainingRatio)
