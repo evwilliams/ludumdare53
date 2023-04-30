@@ -8,6 +8,7 @@ public class GameDirector : MonoBehaviour
     public const int PackageCreationTime = 4;
     public const int StartingRating = 4;
 
+    public const int MaxRating = 5;
     public const int RatingForTimingMiss = 0;
     
     public Inventory playerInventory;
@@ -232,10 +233,14 @@ public class GameDirector : MonoBehaviour
     {
         if (!packageTypesMatch)
             return 1;
+        
+        if (timeRemainingRatio <= 0)
+            return 0;
 
-        const float baselineScore = 1;
-        const float maxScore = 5;
-        return (int)(maxScore * timeRemainingRatio + baselineScore);
+        if (timeRemainingRatio > 0.15)
+            return MaxRating;
+
+        return 4;
     }
 
     private void DropoffEntered(AreaOfInterest area)
