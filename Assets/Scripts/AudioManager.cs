@@ -10,36 +10,36 @@ public class AudioManager : MonoBehaviour
     public AudioClip sound_SuccessfulPickup;
     public AudioClip sound_MissedPickup;
     public AudioClip sound_IncorrectPickup;
-    
-    
-    public IntChannel successfulDropoffsChannel;
-    public IntChannel missedDropoffsChannel;
-    public IntChannel incorrectDropoffsChannel;
+
+
+    public DestinationChannel destinationChannel;
     
     private void OnEnable()
     {
-        successfulDropoffsChannel.ValueChanged += OnSuccessfulDropoff;
-        missedDropoffsChannel.ValueChanged += OnMissedDropoff;
-        incorrectDropoffsChannel.ValueChanged += OnIncorrectDropoff;
+        destinationChannel.SuccessfulDropoff += OnSuccessfulDropoff;
+        destinationChannel.MissedDropoff += OnMissedDropoff;
+        destinationChannel.IncorrectDropoff += OnIncorrectDropoff;
     }
 
     private void OnDisable()
     {
-        successfulDropoffsChannel.ValueChanged -= OnSuccessfulDropoff;
+        destinationChannel.SuccessfulDropoff -= OnSuccessfulDropoff;
+        destinationChannel.MissedDropoff -= OnMissedDropoff;
+        destinationChannel.IncorrectDropoff -= OnIncorrectDropoff;
     }
 
-    private void OnSuccessfulDropoff(int arg0)
+    private void OnSuccessfulDropoff(Destination destination, int i)
     {
         audioPlayer.PlayOneShot(sound_SuccessfulPickup);
     }
 
-    private void OnIncorrectDropoff(int arg0)
-    {
-        audioPlayer.PlayOneShot(sound_IncorrectPickup);
-    }
-
-    private void OnMissedDropoff(int arg0)
+    private void OnMissedDropoff(Destination destination, int i)
     {
         audioPlayer.PlayOneShot(sound_MissedPickup);
+    }
+
+    private void OnIncorrectDropoff(Destination destination, int i)
+    {
+        audioPlayer.PlayOneShot(sound_IncorrectPickup);
     }
 }

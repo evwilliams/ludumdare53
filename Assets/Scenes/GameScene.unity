@@ -224,15 +224,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1139446875738390609, guid: 19f55f40b270e4b028c63d2e8ec8f4a5, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1139446875738390609, guid: 19f55f40b270e4b028c63d2e8ec8f4a5, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1139446875738390609, guid: 19f55f40b270e4b028c63d2e8ec8f4a5, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1139446875738390609, guid: 19f55f40b270e4b028c63d2e8ec8f4a5, type: 3}
+      propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7714812865425995629, guid: 19f55f40b270e4b028c63d2e8ec8f4a5, type: 3}
       propertyPath: m_Name
       value: Source_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7714812865425995629, guid: 19f55f40b270e4b028c63d2e8ec8f4a5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 19f55f40b270e4b028c63d2e8ec8f4a5, type: 3}
@@ -416,6 +428,7 @@ Transform:
   - {fileID: 11188963}
   - {fileID: 761996687}
   - {fileID: 477018873}
+  - {fileID: 850225926}
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -668,9 +681,7 @@ MonoBehaviour:
   gameDirector: {fileID: 483952696}
   canTransitionFrom:
   - {fileID: 761996688}
-  successfulDropoffsChannel: {fileID: 11400000, guid: fccb1600b629d472eb785870d0153c73, type: 2}
-  missedDropoffsChannel: {fileID: 11400000, guid: 3454ce097488c48e196e176b93c0b303, type: 2}
-  incorrectDropoffsChannel: {fileID: 11400000, guid: df114c9e60e2c4d398e2590d1e86b5de, type: 2}
+  destinationChannel: {fileID: 11400000, guid: a4630b9d6bcf0434ba922a88335acf1a, type: 2}
   secondPackageType: {fileID: 11400000, guid: 12e4cea02b2dc40ad8ddf221eb12b2c7, type: 2}
 --- !u!1 &483952695
 GameObject:
@@ -713,7 +724,7 @@ MonoBehaviour:
   - {fileID: 533666689}
   - {fileID: 1605071191}
   pickupChannel: {fileID: 11400000, guid: 64fde075d58e24a2b91f3ffd05619eca, type: 2}
-  dropoffChannel: {fileID: 11400000, guid: a4630b9d6bcf0434ba922a88335acf1a, type: 2}
+  destinationChannel: {fileID: 11400000, guid: a4630b9d6bcf0434ba922a88335acf1a, type: 2}
   packagePrefab: {fileID: 1293086306, guid: 2eb6f487d918c47c393fe14b44828264, type: 3}
   packageTypes:
   - {fileID: 11400000, guid: 12e4cea02b2dc40ad8ddf221eb12b2c7, type: 2}
@@ -721,9 +732,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8fd501e7c054a42578102f10faf26b86, type: 2}
   startingStage: {fileID: 11188964}
   currentStage: {fileID: 0}
-  successfulDropoffsChannel: {fileID: 11400000, guid: fccb1600b629d472eb785870d0153c73, type: 2}
-  missedDropoffsChannel: {fileID: 11400000, guid: 3454ce097488c48e196e176b93c0b303, type: 2}
-  incorrectDropoffsChannel: {fileID: 11400000, guid: df114c9e60e2c4d398e2590d1e86b5de, type: 2}
   starRatingChannel: {fileID: 11400000, guid: 5cbd23906af5e4fc4980d0cb73ed5c57, type: 2}
 --- !u!4 &483952697
 Transform:
@@ -1123,7 +1131,60 @@ MonoBehaviour:
   canTransitionFrom:
   - {fileID: 11188964}
   inputChannel: {fileID: 11400000, guid: eb409735588fc475dbcc92bd9f4d1aa8, type: 2}
-  missedDropoffsChannel: {fileID: 11400000, guid: 3454ce097488c48e196e176b93c0b303, type: 2}
+  destinationChannel: {fileID: 11400000, guid: a4630b9d6bcf0434ba922a88335acf1a, type: 2}
+--- !u!1 &850225925
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 850225926}
+  - component: {fileID: 850225927}
+  m_Layer: 0
+  m_Name: Stage_03
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &850225926
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 850225925}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 209094820}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &850225927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 850225925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d30e7698ea0474d4289ac36ce1587b33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameDirector: {fileID: 483952696}
+  canTransitionFrom:
+  - {fileID: 477018874}
+  destinationChannel: {fileID: 11400000, guid: a4630b9d6bcf0434ba922a88335acf1a, type: 2}
+  playerInventory: {fileID: 1231731198}
+  packageTypes:
+  - {fileID: 11400000, guid: d7407492e53064cc9a6d3f256ad514b0, type: 2}
+  - {fileID: 11400000, guid: 12e4cea02b2dc40ad8ddf221eb12b2c7, type: 2}
+  - {fileID: 11400000, guid: 8fd501e7c054a42578102f10faf26b86, type: 2}
 --- !u!1 &917373560
 GameObject:
   m_ObjectHideFlags: 0
@@ -2403,9 +2464,7 @@ MonoBehaviour:
   sound_SuccessfulPickup: {fileID: 8300000, guid: c287cb27cb2f5421696e5889f01c2c09, type: 3}
   sound_MissedPickup: {fileID: 8300000, guid: 171a746f65dd446e4a9c03d9f2379d62, type: 3}
   sound_IncorrectPickup: {fileID: 8300000, guid: a1026af983104484bb099bec8d742419, type: 3}
-  successfulDropoffsChannel: {fileID: 11400000, guid: fccb1600b629d472eb785870d0153c73, type: 2}
-  missedDropoffsChannel: {fileID: 11400000, guid: 3454ce097488c48e196e176b93c0b303, type: 2}
-  incorrectDropoffsChannel: {fileID: 11400000, guid: df114c9e60e2c4d398e2590d1e86b5de, type: 2}
+  destinationChannel: {fileID: 11400000, guid: a4630b9d6bcf0434ba922a88335acf1a, type: 2}
 --- !u!82 &2084196645
 AudioSource:
   m_ObjectHideFlags: 0

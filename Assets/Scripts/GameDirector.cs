@@ -21,7 +21,7 @@ public class GameDirector : MonoBehaviour
     public List<SpawnPoint> destinationLocations = new();
 
     public AOIChannel pickupChannel;
-    public AOIChannel dropoffChannel;
+    public DestinationChannel destinationChannel;
 
     public Package packagePrefab;
 
@@ -29,29 +29,25 @@ public class GameDirector : MonoBehaviour
 
     public GameStage startingStage;
     public GameStage currentStage;
-
+    
     private int _successfulDropoffs = 0;
     public int SuccessfulDropoffs
     {
         get => _successfulDropoffs;
     }
-    public IntChannel successfulDropoffsChannel;
-    
-    
     
     private int _missedDropoffs = 0;
     public int MissedDropoffs
     {
         get => _missedDropoffs;
     }
-    public IntChannel missedDropoffsChannel;
     
     private int _incorrectDropoffs = 0;
     public int IncorrectDropoffs
     {
         get => _incorrectDropoffs;
     }
-    public IntChannel incorrectDropoffsChannel;
+    
     
     
     private float _starRating;
@@ -67,8 +63,8 @@ public class GameDirector : MonoBehaviour
     private void OnEnable()
     {
         pickupChannel.Entered += PickupEntered;
-        dropoffChannel.Entered += DropoffEntered;
-        dropoffChannel.TimerExpired += DropoffTimerExpired;
+        destinationChannel.Entered += DropoffEntered;
+        destinationChannel.TimerExpired += DropoffTimerExpired;
     }
 
     private void Start()
@@ -103,6 +99,20 @@ public class GameDirector : MonoBehaviour
             currentStage.OnStageExit();
         currentStage = gameStage;
         currentStage.OnStageEnter();
+    }
+
+    public int AvailableProducersCount()
+    {
+        int count = 0;
+        foreach (var producer in sources)
+        {
+            if (producer.IsAvailable())
+            {
+                count++;
+            }
+        }
+
+        return count;
     }
 
     [CanBeNull]
@@ -202,8 +212,8 @@ public class GameDirector : MonoBehaviour
     private void OnDisable()
     {
         pickupChannel.Entered -= PickupEntered;
-        dropoffChannel.Entered -= DropoffEntered;
-        dropoffChannel.TimerExpired -= DropoffTimerExpired;
+        destinationChannel.Entered -= DropoffEntered;
+        destinationChannel.TimerExpired -= DropoffTimerExpired;
     }
 
     private void PickupEntered(AreaOfInterest area)
@@ -249,12 +259,12 @@ public class GameDirector : MonoBehaviour
         if (packageTypeMatches)
         {
             destination.DropoffSucceeded(rating);
-            IncrementSuccessfulDropoffs();
+            OnSuccessfulDropoff(destination);
         }
         else
         {
             destination.DropoffMismatch(rating);
-            IncrementIncorrectDropoffs();
+            OnIncorrectDropoff(destination);
         }
         playerInventory.DropoffPackage();
         FindMatchingSpawnPoint(destination)?.SetAreaOfInterest(null);
@@ -262,31 +272,31 @@ public class GameDirector : MonoBehaviour
     
     private void DropoffTimerExpired(AreaOfInterest area)
     {
-        Debug.Log($"{area.name}'s timer expired");
+        // Debug.Log($"{area.name}'s timer expired");
         var destination = area as Destination;
 
         var rating = RatingForTimingMiss;
         RateDelivery(rating);
-        IncrementMissedDropoffs();
+        OnMissedDropoff(destination);
         destination.DropoffMissed(rating);
         FindMatchingSpawnPoint(destination)?.SetAreaOfInterest(null);
     }
 
-    private void IncrementSuccessfulDropoffs()
+    private void OnSuccessfulDropoff(Destination destination)
     {
         _successfulDropoffs++;
-        successfulDropoffsChannel.ValueChanged?.Invoke(_successfulDropoffs);
+        destinationChannel.SuccessfulDropoff?.Invoke(destination, _successfulDropoffs);
     }
 
-    private void IncrementMissedDropoffs()
+    private void OnMissedDropoff(Destination destination)
     {
         _missedDropoffs++;
-        missedDropoffsChannel.ValueChanged?.Invoke(_missedDropoffs);
+        destinationChannel.MissedDropoff?.Invoke(destination, _missedDropoffs);
     }
     
-    private void IncrementIncorrectDropoffs()
+    private void OnIncorrectDropoff(Destination destination)
     {
         _incorrectDropoffs++;
-        incorrectDropoffsChannel.ValueChanged?.Invoke(_incorrectDropoffs);
+        destinationChannel.IncorrectDropoff?.Invoke(destination, _incorrectDropoffs);
     }
 }

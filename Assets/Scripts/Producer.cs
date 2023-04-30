@@ -19,6 +19,16 @@ public class Producer : AreaOfInterest
         timerFill.color = packageType.color;
     }
 
+    public bool IsAvailable()
+    {
+        return !GetIsProducing() && !HasPackageReady();
+    }
+
+    public bool GetIsProducing()
+    {
+        return bodyAnimator.GetBool(IsProducing);
+    }
+    
     public bool HasPackageReady()
     {
         return _packageReady;

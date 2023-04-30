@@ -1,22 +1,18 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Stage_02 : GameStage
+public class Stage_03 : GameStage
 {
     public DestinationChannel destinationChannel;
 
-    public PackageType secondPackageType;
-    private PackageType _firstPackageType;
+    public Inventory playerInventory;
+    public PackageType[] packageTypes; // Expects at least 3
 
-
-    // This stage is activated if the player successfully completes a dropoff in Stage_01
-    private void SuccessfulDropoffCountChanged(Destination destination, int successCount)
+    // This stage is activated if the player successfully completes a dropoff in Stage_02
+    private void SuccessfulDropoffCountChanged(AreaOfInterest arg0, int successCount)
     {
         if (canTransitionFrom.Contains(gameDirector.currentStage) && successCount > 0)
-        {
-            _firstPackageType = destination.PackageType;
             gameDirector.TransitionTo(this);
-        }
     }
 
     private void OnEnable()
@@ -36,9 +32,16 @@ public class Stage_02 : GameStage
     public override void OnStageEnter()
     {
         Debug.Log($"Entering {name}");
-        gameDirector.SpawnDestinationWherePossible(secondPackageType);
-        gameDirector.BeginCreatingPackage(0, _firstPackageType);
-        gameDirector.BeginCreatingPackage(1, secondPackageType);
+        playerInventory.allowTwoPackages = true;
+        
+        SetupSourceAndDestination(0, packageTypes[1]);
+        SetupSourceAndDestination(1, packageTypes[2]);
+    }
+
+    private void SetupSourceAndDestination(int sourceIndex, PackageType packageType)
+    {
+        gameDirector.SpawnDestinationWherePossible(packageType);
+        gameDirector.BeginCreatingPackage(sourceIndex, packageType);
     }
 
     public override void OnStageExit()

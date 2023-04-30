@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 public class Stage_01 : GameStage
 {
     public InputChannel inputChannel;
-    public IntChannel missedDropoffsChannel;
+    public DestinationChannel destinationChannel;
     private PackageType startingPackageType;
 
     // This stage is activated if the player moves during the tutorial stage
@@ -17,13 +17,13 @@ public class Stage_01 : GameStage
     private void OnEnable()
     {
         inputChannel.MovementPerformed += MovementPerformed;
-        missedDropoffsChannel.ValueChanged += MissedDropoff;
+        destinationChannel.MissedDropoff += MissedDropoff;
     }
 
     private void OnDisable()
     {
         inputChannel.MovementPerformed -= MovementPerformed;
-        missedDropoffsChannel.ValueChanged -= MissedDropoff;
+        destinationChannel.MissedDropoff -= MissedDropoff;
     }
 
     public override void OnStageEnter()
@@ -41,7 +41,7 @@ public class Stage_01 : GameStage
         gameObject.SetActive(false);
     }
     
-    private void MissedDropoff(int arg0)
+    private void MissedDropoff(Destination destination, int missCount)
     {
         if (gameDirector.currentStage == this)
             KeepSpawningDestinations();

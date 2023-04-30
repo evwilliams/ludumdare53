@@ -5,6 +5,7 @@ public class Inventory : MonoBehaviour
 {
     public Transform holster;
     private List<Package> packages = new();
+    public bool allowTwoPackages = false;
     
     public bool HasPackage()
     {
@@ -29,7 +30,7 @@ public class Inventory : MonoBehaviour
         
         for (int i = holster.childCount - 1; i >= 0; i--)
         {
-            Debug.Log($"Dropping off: {holster.GetChild(i).gameObject.name}");
+            // Debug.Log($"Dropping off: {holster.GetChild(i).gameObject.name}");
             Destroy(holster.GetChild(i).gameObject);
         }
         packages.Clear();
