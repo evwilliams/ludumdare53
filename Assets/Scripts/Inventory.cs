@@ -29,11 +29,13 @@ public class Inventory : MonoBehaviour
 
     public void PositionPackages()
     {
-        for (int i = 0; i < packages.Count; i++)
+        for (int i = packages.Count - 1; i >= 0; i--)
         {
             var packageTransform = packages[i].transform;
-            packageTransform.position = holsters[i].transform.position;
-            packageTransform.parent = holsters[i];
+            var holsterSpot = holsters[i];
+            packageTransform.SetParent(holsterSpot);
+            packageTransform.localPosition = Vector3.zero;
+            packageTransform.localScale = holsterSpot.localScale;
         }
     }
 
@@ -50,6 +52,6 @@ public class Inventory : MonoBehaviour
 
     public Package GetPackageForDropoff()
     {
-        return packages.Last();
+        return packages.First();
     }
 }
