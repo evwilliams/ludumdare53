@@ -485,7 +485,7 @@ MonoBehaviour:
   canTransitionFrom:
   - {fileID: 1146341702}
   stage04: {fileID: 1146341702}
-  endGameAfterNumDeliveriesInStage04: 5
+  endGameAfterNumDeliveriesInStage04: 10
   scorePanelRoot: {fileID: 693091734}
   scoreText_storkRating: {fileID: 566647733}
   scoreText_successfulDeliveries: {fileID: 620778486}
@@ -1841,6 +1841,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioPlayer: {fileID: 2084196645}
   destinationChannel: {fileID: 11400000, guid: a4630b9d6bcf0434ba922a88335acf1a, type: 2}
+  producerChannel: {fileID: 11400000, guid: 2fe73c6c067c54104a97b4624afd2c17, type: 2}
+  clip_ProducerStarted: {fileID: 8300000, guid: 7c8dc28810fff4506a38a0a74e0cd896, type: 3}
+  clip_ProducerCompleted: {fileID: 8300000, guid: ff3863a9974a04bb6af4d7d2adae50dd, type: 3}
 --- !u!82 &2084196645
 AudioSource:
   m_ObjectHideFlags: 0
