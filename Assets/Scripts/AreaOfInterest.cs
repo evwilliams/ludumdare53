@@ -19,7 +19,7 @@ public class AreaOfInterest : MonoBehaviour
         set => SetPackageType(value);
     }
 
-    public void SetPackageType(PackageType pType)
+    public virtual void SetPackageType(PackageType pType)
     {
         _packageType = pType;
     }
@@ -59,7 +59,7 @@ public class AreaOfInterest : MonoBehaviour
 
     public void CancelTimer() => _timer.Cancel();
 
-    private void OnTimerDone()
+    protected virtual void OnTimerDone()
     {
         outputChannel.TimerExpired?.Invoke(this);
     }

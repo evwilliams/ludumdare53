@@ -14,7 +14,7 @@ public class GameDirector : MonoBehaviour
     public const int RatingForTimingMiss = 0;
     
     public Inventory playerInventory;
-    public List<AreaOfInterest> sources = new();
+    public List<Producer> sources = new();
     private List<AreaOfInterest> destinations = new();
 
     public AreaOfInterest destinationPrefab;
@@ -173,22 +173,17 @@ public class GameDirector : MonoBehaviour
 
     public void InstantlyCreatePackage(int sourceIndex, PackageType packageType)
     {
-        var source = sources[sourceIndex];
-        source.SetPackageType(packageType);
-        source.spriteRenderer.color = packageType.color;
-        source.gameObject.SetActive(true);
+        var source = GetSource(sourceIndex);
+        source.InstantlyCreatePackage(packageType);
     }
 
     public void BeginCreatingPackage(int sourceIndex, PackageType packageType)
     {
-        var source = sources[sourceIndex];
-        source.SetPackageType(packageType);
-        source.spriteRenderer.color = packageType.color;
-        source.gameObject.SetActive(true);
-        source.StartTimer(PackageCreationTime);
+        var source = GetSource(sourceIndex);
+        source.BeginCreatingPackage(packageType, PackageCreationTime);
     }
     
-    public AreaOfInterest GetSource(int index)
+    public Producer GetSource(int index)
     {
         return sources[index];
     }

@@ -33,7 +33,7 @@ public class Stage_02 : GameStage
     {
         Debug.Log($"Entering {name}");
         gameDirector.SpawnDestinationWherePossible(secondPackageType);
-        gameDirector.InstantlyCreatePackage(1, secondPackageType);
+        gameDirector.BeginCreatingPackage(1, secondPackageType);
     }
 
     public override void OnStageExit()
