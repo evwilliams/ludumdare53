@@ -213,7 +213,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e066de6a2528b4b7a9b9711b810b0dd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 16
+  moveSpeed: 14
   characterController: {fileID: 5297752515831655214}
   bodyTransform: {fileID: 1014395010829556577}
   inputChannel: {fileID: 11400000, guid: eb409735588fc475dbcc92bd9f4d1aa8, type: 2}
