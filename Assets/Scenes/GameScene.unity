@@ -524,6 +524,7 @@ MonoBehaviour:
   scoreText_missedDeliveries: {fileID: 1910922674}
   remainingDeliveriesUIContainer: {fileID: 3117935410210114538}
   remainingDeliveriesCounterText: {fileID: 3117935410210114537}
+  audioManager: {fileID: 2084196644}
 --- !u!1 &323202730
 GameObject:
   m_ObjectHideFlags: 0
@@ -1976,10 +1977,11 @@ MonoBehaviour:
   audioPlayer: {fileID: 2084196645}
   destinationChannel: {fileID: 11400000, guid: a4630b9d6bcf0434ba922a88335acf1a, type: 2}
   producerChannel: {fileID: 11400000, guid: 2fe73c6c067c54104a97b4624afd2c17, type: 2}
-  cloudChannel: {fileID: 0}
+  cloudChannel: {fileID: 11400000, guid: 879401c802d094467b36f0120265539c, type: 2}
   clip_ProducerStarted: {fileID: 8300000, guid: 403080f064cd742959beae018b9220c8, type: 3}
   clip_ProducerCompleted: {fileID: 8300000, guid: 4f30c965c94b7450ca71de23db43e38d, type: 3}
   clip_cloudCollision: {fileID: 8300000, guid: ca7bb528daf1b4e54967a3c9ee9b6be9, type: 3}
+  clip_scoreScreen: {fileID: 8300000, guid: 2b2b432cc6430471281c1a2313ba0a11, type: 3}
 --- !u!82 &2084196645
 AudioSource:
   m_ObjectHideFlags: 0

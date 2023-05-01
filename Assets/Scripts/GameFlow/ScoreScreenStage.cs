@@ -1,8 +1,5 @@
-using System;
 using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using Random = UnityEngine.Random;
 
 public class ScoreScreenStage : GameStage
 {
@@ -14,11 +11,13 @@ public class ScoreScreenStage : GameStage
     public TextMeshProUGUI scoreText_successfulDeliveries;
     public TextMeshProUGUI scoreText_incorrectDeliveries;
     public TextMeshProUGUI scoreText_missedDeliveries;
-    
+
     // So hacky
     public GameObject remainingDeliveriesUIContainer;
     public TextMeshProUGUI remainingDeliveriesCounterText;
 
+    public AudioManager audioManager;
+    
     // TODO - Make this way of checking transitions not suck
     private void Update()
     {
@@ -55,6 +54,7 @@ public class ScoreScreenStage : GameStage
         remainingDeliveriesUIContainer.SetActive(false);
         UpdateScores();
         scorePanelRoot.SetActive(true);
+        audioManager.PlayScoreScreenSound();
     }
 
     public override void OnStageExit()

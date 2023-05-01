@@ -10,6 +10,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip clip_ProducerStarted;
     public AudioClip clip_ProducerCompleted;
     public AudioClip clip_cloudCollision;
+    public AudioClip clip_scoreScreen;
     
     private void OnEnable()
     {   
@@ -38,11 +39,16 @@ public class AudioManager : MonoBehaviour
 
     private void ProducerStarted(Producer arg0)
     {
-        audioPlayer.PlayOneShot(clip_ProducerStarted);
+        audioPlayer.PlayOneShot(clip_ProducerStarted, 0.5f);
     }
 
     private void ProducerCompleted(Producer arg0)
     {
         audioPlayer.PlayOneShot(clip_ProducerCompleted, 0.5f);
+    }
+
+    public void PlayScoreScreenSound()
+    {
+        audioPlayer.PlayOneShot(clip_scoreScreen);
     }
 }
