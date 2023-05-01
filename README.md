@@ -3,6 +3,8 @@
 This is the source and all assets for my first ever game jam.
 
 Submission for the Ludum Dare 53 game jam: https://ldjam.com/events/ludum-dare/53/baby-printer
+
+## Play the Game
 Play online at: https://evwgames.itch.io/baby-printer
 
 
