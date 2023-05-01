@@ -5,17 +5,25 @@ public class AudioManager : MonoBehaviour
     public AudioSource audioPlayer;
     public DestinationChannel destinationChannel;
     public ProducerChannel producerChannel;
-
+    public AOIChannel cloudChannel;
+    
     public AudioClip clip_ProducerStarted;
     public AudioClip clip_ProducerCompleted;
+    public AudioClip clip_cloudCollision;
     
     private void OnEnable()
     {   
         destinationChannel.ResponseDisplayed += ResponseDisplayed;
         producerChannel.ProducerStarted += ProducerStarted;
         producerChannel.ProducerCompleted += ProducerCompleted;
+        cloudChannel.Entered += CloudCollision;
     }
-    
+
+    private void CloudCollision(AreaOfInterest arg0)
+    {
+        audioPlayer.PlayOneShot(clip_cloudCollision);
+    }
+
     private void OnDisable()
     {
         destinationChannel.ResponseDisplayed -= ResponseDisplayed;
@@ -30,7 +38,7 @@ public class AudioManager : MonoBehaviour
 
     private void ProducerStarted(Producer arg0)
     {
-        audioPlayer.PlayOneShot(clip_ProducerStarted, 0.5f);
+        audioPlayer.PlayOneShot(clip_ProducerStarted);
     }
 
     private void ProducerCompleted(Producer arg0)

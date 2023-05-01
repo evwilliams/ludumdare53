@@ -538,7 +538,13 @@ MonoBehaviour:
   outputChannel: {fileID: 11400000, guid: a4630b9d6bcf0434ba922a88335acf1a, type: 2}
   successResponses:
   - {fileID: 11400000, guid: 55ca172a8e9bc4a54b9c29e605f93097, type: 2}
+  - {fileID: 11400000, guid: 20b2d88d6a28f4bc39e25d50a4961ed8, type: 2}
+  - {fileID: 11400000, guid: 3444de6478b924f5abc848a737ff5bbf, type: 2}
+  - {fileID: 11400000, guid: 4d229af96ab7c4dd687ede4f36d6b99f, type: 2}
+  - {fileID: 11400000, guid: 62ef66b7bc9f34f66ac3bd1d7fdda384, type: 2}
+  - {fileID: 11400000, guid: 76d562a4ad32b489cb5aabaeaca750bb, type: 2}
   mismatchResponses:
+  - {fileID: 11400000, guid: e118f5df8bad84030838a665af62a0f3, type: 2}
   - {fileID: 11400000, guid: b95a899d3b23540df90fb3a51340e915, type: 2}
   - {fileID: 11400000, guid: 5ab788e629fac4d9fb170d0dea6129fc, type: 2}
   - {fileID: 11400000, guid: bfa024ce11dc448949166596fc561102, type: 2}
@@ -547,6 +553,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: efa16ba03dbc340d4b6c4b55e74ff87a, type: 2}
   missResponses:
   - {fileID: 11400000, guid: 9fff0c87f4ccf4a04adab19c66dbed73, type: 2}
+  - {fileID: 11400000, guid: 698da2d50e4c54e2f93f1485188a3fb3, type: 2}
+  - {fileID: 11400000, guid: d335c526180844261a8511d2c6011271, type: 2}
+  - {fileID: 11400000, guid: 9d37a0c644fa84ce5b22f1b63960b99f, type: 2}
 --- !u!1 &8974127760397231323
 GameObject:
   m_ObjectHideFlags: 0
