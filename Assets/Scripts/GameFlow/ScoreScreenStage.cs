@@ -12,11 +12,12 @@ public class ScoreScreenStage : GameStage
     public TextMeshProUGUI scoreText_incorrectDeliveries;
     public TextMeshProUGUI scoreText_missedDeliveries;
 
+    
     // So hacky
     public GameObject remainingDeliveriesUIContainer;
     public TextMeshProUGUI remainingDeliveriesCounterText;
-
     public AudioManager audioManager;
+    public GameObject starRatingContainer;
     
     // TODO - Make this way of checking transitions not suck
     private void Update()
@@ -53,6 +54,7 @@ public class ScoreScreenStage : GameStage
         Debug.Log($"Entering {name}");
         remainingDeliveriesUIContainer.SetActive(false);
         UpdateScores();
+        starRatingContainer.SetActive(false);
         scorePanelRoot.SetActive(true);
         audioManager.PlayScoreScreenSound();
     }

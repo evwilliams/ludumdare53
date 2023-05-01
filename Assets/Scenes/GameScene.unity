@@ -525,6 +525,7 @@ MonoBehaviour:
   remainingDeliveriesUIContainer: {fileID: 3117935410210114538}
   remainingDeliveriesCounterText: {fileID: 3117935410210114537}
   audioManager: {fileID: 2084196644}
+  starRatingContainer: {fileID: 832668412}
 --- !u!1 &323202730
 GameObject:
   m_ObjectHideFlags: 0
@@ -1183,6 +1184,11 @@ MonoBehaviour:
   - {fileID: 11188964}
   inputChannel: {fileID: 11400000, guid: eb409735588fc475dbcc92bd9f4d1aa8, type: 2}
   destinationChannel: {fileID: 11400000, guid: a4630b9d6bcf0434ba922a88335acf1a, type: 2}
+--- !u!1 &832668412 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3117935409846389136, guid: e575bd1dd0b34414f951d8aef83bc51f, type: 3}
+  m_PrefabInstance: {fileID: 3117935410210114536}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &850225925
 GameObject:
   m_ObjectHideFlags: 0
